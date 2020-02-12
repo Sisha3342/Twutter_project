@@ -1,0 +1,16 @@
+On branch task1_branch
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        .idea/
+        twitter_project.iml
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+On branch task1_branch
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        task1/
+
+nothing added to commit but untracked files present (use "git add" to track)
