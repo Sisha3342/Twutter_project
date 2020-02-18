@@ -1,0 +1,17 @@
+commit 1c6eaacecf1832a73e4476523b28954052c823e7 (HEAD -> task1_branch)
+Author: spalanevich <alexander.palanevich@gmail.com>
+Date:   Wed Feb 12 23:30:41 2020 +0300
+
+    added status.txt
+
+commit e5ef90708f0d04f6eeb71a4d517e8d7d7cd9f311
+Author: spalanevich <alexander.palanevich@gmail.com>
+Date:   Wed Feb 12 23:30:04 2020 +0300
+
+    added .gitignore
+
+commit 87c664fa504cb60096ea6d05514823a1a10d233d (origin/master, origin/HEAD, master)
+Author: Alexander <48152200+Sisha3342@users.noreply.github.com>
+Date:   Wed Feb 12 22:57:07 2020 +0300
+
+    Create README.md
