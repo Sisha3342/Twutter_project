@@ -42,3 +42,23 @@ img.user-icon {
     height: 75%;
     cursor: pointer;
 }
+
+footer {
+    background-color: silver;
+    height: 10%;
+    width: 100%;
+    text-align: center;
+}
+
+.user-info {
+    font-family: cursive;
+    cursor: default;
+}
+
+.date {
+    position: absolute;
+    font-family: cursive;
+    cursor: default;
+    right: 5%;
+    bottom: -106%;
+}
