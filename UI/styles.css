@@ -1,0 +1,44 @@
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+header {
+    position: fixed;
+    background-color: silver;
+    height: 10%;
+    width: 100%;
+    text-align: center;
+    top: 0%;
+}
+
+h1.site-name {
+    color: blueviolet;
+    cursor: default;
+}
+
+button.log-out {
+    font-size: 100%;
+    position: absolute;
+    width: 10%;
+    height: 60%;
+    right: 1%;
+    top: 25%;
+    cursor: pointer;
+}
+
+h2.username {
+    position: absolute;
+    left: 10%;
+    top: 10%;
+    cursor: pointer;
+}
+
+img.user-icon {
+    position: absolute;
+    top: 15%;
+    left: 5%;
+    width: 3.75%;
+    height: 75%;
+    cursor: pointer;
+}
