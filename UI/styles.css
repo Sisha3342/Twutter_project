@@ -18,27 +18,28 @@ h1.site-name {
 }
 
 button.log-out {
+    position: relative;
     font-size: 100%;
-    position: absolute;
     width: 10%;
     height: 60%;
-    right: 1%;
-    top: 25%;
+    right: -40%;
+    top: -80%; 
+    border-radius: 20px;
     cursor: pointer;
 }
 
 h2.username {
-    position: absolute;
-    left: 10%;
-    top: 10%;
+    position: relative;
+    left: -34%;
+    top: -160%;
     cursor: pointer;
 }
 
 img.user-icon {
-    position: absolute;
-    top: 15%;
-    left: 5%;
-    width: 3.75%;
+    position: relative;
+    top: -240%;
+    left: -40%;
+    width: 4%;
     height: 75%;
     cursor: pointer;
 }
@@ -56,9 +57,106 @@ footer {
 }
 
 .date {
-    position: absolute;
     font-family: cursive;
     cursor: default;
-    right: 5%;
-    bottom: -106%;
+}
+
+.news-seed {
+    width: 75%;
+    margin: 7% 24% 4%;
+    height: 1000px;
+    background-color: khaki;
+}
+
+.filters {
+    position: fixed;
+    margin: 0.1% 0.5%;
+    width: 23%;
+    height: 400px;
+    background-color: lightgray;
+    text-align: center;
+    line-height: 2px;
+}
+
+button.apply-filters {
+    position: relative;
+    display: block;
+    bottom: -10%;
+    left: 35%;
+    width: 30%;
+    height: 7%;
+    font-size: 100%;
+    font-weight: bolder;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.filters > h1, h3 {
+    cursor: default;
+}
+
+@media only screen and (max-width: 600px) {
+
+    header {
+        height: 7%;
+    }
+
+    h1.site-name {
+        font-size: 130%;
+    }
+
+    button.log-out {
+        top: -90%;
+        right: -30%;
+        width: 20%;
+    }
+    h2.username {
+        font-size: 130%;
+        left: -27%;
+        top: -180%;
+    }
+
+    h1.site-name {
+        bottom: 20%;
+    }
+
+    img.user-icon {
+        width: 10%;
+        top: -280%;
+        left: -43%;
+    }
+
+    footer {
+        height: 5%;
+    }
+
+    .user-info {
+        font-size: 70%;
+    }
+
+    .date {
+        font-size: 70%;
+    }
+
+    .filters {
+        margin: 6% 0.5%;
+        height: 50%;
+    }
+
+    .filters > h1 {
+        font-size: 150%;
+    }
+
+    .filters > h3 {
+        font-size: 100%;
+    }
+
+    .filters > input {
+        width: 80%;
+    }
+
+    button.apply-filters {
+        width: 70%;
+        left: 15%;
+    }
 }
