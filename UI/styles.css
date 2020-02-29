@@ -4,8 +4,9 @@ body {
 }
 
 header {
+    z-index: 1;
     position: fixed;
-    background-color: silver;
+    background-color: rgb(141, 203, 231);
     height: 10%;
     width: 100%;
     text-align: center;
@@ -24,7 +25,6 @@ button.log-out {
     height: 60%;
     right: -40%;
     top: -80%; 
-    border-radius: 20px;
     cursor: pointer;
 }
 
@@ -45,7 +45,7 @@ img.user-icon {
 }
 
 footer {
-    background-color: silver;
+    background-color: rgb(141, 203, 231);
     height: 10%;
     width: 100%;
     text-align: center;
@@ -63,17 +63,19 @@ footer {
 
 .news-seed {
     width: 75%;
-    margin: 7% 24% 4%;
+    margin: 5% 24% -1%;
     height: 1000px;
     background-color: khaki;
+    overflow: auto;
 }
 
 .filters {
+    z-index: -1;
     position: fixed;
     margin: 0.1% 0.5%;
     width: 23%;
     height: 400px;
-    background-color: lightgray;
+    background-color: rgb(190, 141, 231);
     text-align: center;
     line-height: 2px;
 }
@@ -87,12 +89,89 @@ button.apply-filters {
     height: 7%;
     font-size: 100%;
     font-weight: bolder;
-    border-radius: 20px;
     cursor: pointer;
 }
 
 .filters > h1, h3 {
     cursor: default;
+}
+
+button.add-button {
+    position: relative;
+    font-size: 100%;
+    width: 12%;
+    height: 5%;
+    left: 3%;
+    top: 2%;
+
+    cursor: pointer;
+}
+
+.test-post {
+    margin: 5%;
+    width: 90%;
+    height: 30%;
+    background-color: silver;
+}
+
+.post-header {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 100%;
+}
+
+.post-description {
+    margin: 2% 1%;
+    font-size: 125%;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+img.post-image {
+    position: relative;
+    margin: -1% 2%;
+    width: 10%;
+    height: 30%;
+}
+
+.post-footer {
+    border-top-color: black;
+    border-top-width: 20%;
+    border-top-style: solid;
+}
+
+img.post-like {
+    position: relative;
+    width: 2%; 
+    margin: 0.5%;
+}
+
+.likes-count {
+    position: relative;
+    bottom: 7px;
+    font-style: italic;
+}
+
+button.edit-button {
+    position: relative;
+    float: right;
+    right: 9%;
+    top: 6px;
+    text-align: center;
+}
+
+button.delete-button {
+    position: relative;
+    float: right;
+    right: -2%;
+    top: 6px;
+    text-align: center;
+}
+
+button.more-button {
+    position: relative;
+    margin: -1% 5% 2%;
+    left: 35%;
+    height: 5%;
+    width: 15%;
 }
 
 @media only screen and (max-width: 600px) {
@@ -140,7 +219,7 @@ button.apply-filters {
 
     .filters {
         margin: 6% 0.5%;
-        height: 50%;
+        height: 45%;
     }
 
     .filters > h1 {
@@ -158,5 +237,43 @@ button.apply-filters {
     button.apply-filters {
         width: 70%;
         left: 15%;
+    }
+
+    button.add-button {
+        top: 3%;
+        height: 3%;
+        width: 30%;
+        font-size: 80%;
+    }
+
+    .test-post {
+        margin-top: 15%;
+        height: 22%;
+    }
+
+    .post-header {
+        font-size: 70%;
+    }
+
+    .post-description {
+        font-size: 90%;
+    }
+
+    img.post-image {
+        width: 25%;
+    }
+
+    img.post-like {
+        width: 10%;
+    }
+
+    button.delete-button {
+        font-size: 90%;
+        right: -10%;
+    }
+
+    button.edit-button {
+        font-size: 90%;
+        right: 30%;
     }
 }
