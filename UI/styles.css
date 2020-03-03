@@ -11,7 +11,7 @@ header {
     text-align: center;
     padding: 0.5%;
     top: 0%;
-    margin-bottom: 1%;
+    margin-bottom: 0.5%;
 }
 
 h1.site-name {
@@ -22,13 +22,11 @@ h1.site-name {
 }
 
 button.log-out {
-    position: relative;
     font-size: 15px;
     float: right;
     margin: 0.5% 5% 0.5% 5%;
     height: 30px;
     width: 80px;
-    
     cursor: pointer;
 }
 
@@ -39,15 +37,20 @@ button.log-out {
 }
 
 img.user-icon {
-    position: relative;
     width: 20px;
     cursor: pointer;
 }
 
-.filters {
-    margin: 6% 0.5% 6%;
+.content {
+    margin: 0.5%;
     padding: 0.5%;
-    position: relative;
+}
+
+.filters {
+    vertical-align: top;
+    display: inline-block;
+    margin: 0.5% 0.5% 1%;
+    padding: 0.5%;
     background-color: rgb(190, 141, 231);
     text-align: center;
     line-height: 2px;
@@ -61,7 +64,6 @@ img.user-icon {
 
 
 button.apply-filters {
-    position: relative;
     width: 70px;
     font-size: 15px;
     font-weight: bolder;
@@ -69,26 +71,27 @@ button.apply-filters {
 }
 
 .news-seed {
-    width: 1150px;
-    margin: 5% 24% -1%;
+    display: inline-block;
+    margin: 0.5% 0.25% 1% 1%;
+    padding: 1%;
+    width: 1050px;
     background-color: khaki;
-    overflow: auto;
 }
 
 button.add-button {
+    display: block;
+    margin: auto;
     position: relative;
-    font-size: 100%;
-    width: 12%;
-    height: 5%;
-    left: 3%;
-    top: 2%;
+    font-size: 20px;
+    width: 120px;
+    height: 40px;
     cursor: pointer;
 }
 
 .test-post {
     position: relative;
     padding: 1%;
-    margin: 5%;
+    margin: 1% 5%;
     background-color: silver;
 }
 
@@ -134,18 +137,23 @@ img.post-like {
     float: right;
 }
 
+button.action-button {
+    width: 60px;
+    height: 30px;
+}
+
 button.more-button {
+    display: block;
+    margin: auto;
     position: relative;
-    margin: -1% 5% 2%;
-    left: 35%;
-    height: 5%;
-    width: 15%;
+    font-size: 20px;
+    width: 120px;
+    height: 40px;
     cursor: pointer;
 }
 
 footer {
     background-color: rgb(141, 203, 231);
-    height: 10%;
     width: 100%;
     text-align: center;
 }
