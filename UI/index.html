@@ -9,12 +9,14 @@
 
     <body>
         <header>
+            <span class="user-info">
+                <img class="user-icon" src="images/user_icon.png">
+                Sasha
+            </span>
+
             <h1 class="site-name">Twutter</h1>
 
             <button class="log-out">Log out</button>
-
-            <h2 class="username">Sasha</h2>
-            <img class="user-icon" src="images/user_icon.png">
         </header>
 
         <div class="filters">
@@ -39,8 +41,7 @@
             
             <div class="test-post">
                 <div class="post-header">
-                    <h3>Sasha</h3>
-                    <p>01.03.2020 1:19</p>
+                    <h3>Sasha, 01.03.2020 1:19</h3>
                     <i>#TAG_1, #TAG_2</i>
                 </div>
 
@@ -50,18 +51,21 @@
                 </div>
 
                 <div class="post-footer">
-                    <img class="post-like" src="images/like_image.png">
-                    <span class="likes-count">120</span>
-                    <button class="edit-button">Edit</button>
-                    <button class="delete-button">Delete</button>
+                    <span class="likes-display">
+                        <img class="post-like" src="images/like_image.png">
+                        <span class="likes-count">120</span>    
+                    </span>
+                    
+                    <div class="post-actions-buttons">
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </div>
                 </div>
-
             </div>
 
             <div class="test-post">
                 <div class="post-header">
-                    <h3>Sasha</h3>
-                    <p>01.03.2020 1:19</p>
+                    <h3>Sasha, 01.03.2020 1:19</h3>
                     <i>#TAG_1, #TAG_2</i>
                 </div>
 
@@ -71,52 +75,17 @@
                 </div>
 
                 <div class="post-footer">
-                    <img class="post-like" src="images/like_image.png">
-                    <span class="likes-count">120</span>
-                    <button class="edit-button">Edit</button>
-                    <button class="delete-button">Delete</button>
+                    <span class="likes-display">
+                        <img class="post-like" src="images/like_image.png">
+                        <span class="likes-count">120</span>    
+                    </span>
+                    
+                    <div class="post-actions-buttons">
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </div>
                 </div>
-
             </div>
-
-            <div class="test-post">
-                <div class="post-header">
-                    <h3>Stas</h3>
-                    <p>01.03.2020 1:19</p>
-                    <i>#TAG_1, #TAG_2</i>
-                </div>
-
-                <div class="post-description">
-                    <p>Test description. Nothing serious</p>
-                    <img class="post-image" src="images/forest_image.png">
-                </div>
-
-                <div class="post-footer">
-                    <img class="post-like" src="images/like_image.png">
-                    <span class="likes-count">120</span>
-                </div>
-
-            </div>
-
-            <div class="test-post">
-                <div class="post-header">
-                    <h3>Alex</h3>
-                    <p>01.03.2020 1:19</p>
-                    <i>#TAG_1, #TAG_2</i>
-                </div>
-
-                <div class="post-description">
-                    <p>Test description. Nothing serious</p>
-                    <img class="post-image" src="images/forest_image.png">
-                </div>
-
-                <div class="post-footer">
-                    <img class="post-like" src="images/like_image.png">
-                    <span class="likes-count">120</span>
-                </div>
-
-            </div>
-            
 
             <button class="more-button">Load more</button>
         </div>
@@ -124,7 +93,7 @@
         <footer>
             <h1 class="site-name">Twutter</h1>
 
-            <div class="user-info">
+            <div class="creator-info">
                 Author: Alexander Palanevich,
                 6'th group, 2'nd course,
                 alexander.palanevich@gmail.com

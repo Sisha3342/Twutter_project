@@ -7,40 +7,39 @@ header {
     z-index: 1;
     position: fixed;
     background-color: rgb(141, 203, 231);
-    height: 10%;
     width: 100%;
     text-align: center;
+    padding: 0.5%;
     top: 0%;
 }
 
 h1.site-name {
+    display: inline;
     color: blueviolet;
+    margin: 5%;
     cursor: default;
 }
 
 button.log-out {
     position: relative;
     font-size: 100%;
-    width: 10%;
-    height: 60%;
-    right: -40%;
-    top: -80%; 
+    float: right;
+    margin: 0.5% 5% 0.5% 5%;
+    height: 40px;
+    width: 100px;
+    
     cursor: pointer;
 }
 
-h2.username {
-    position: relative;
-    left: -34%;
-    top: -160%;
-    cursor: pointer;
+.user-info {
+    margin: 0.5% 5% 0.5% 10%;
+    float: left;
+    font-size: 30px;
 }
 
 img.user-icon {
     position: relative;
-    top: -240%;
-    left: -40%;
-    width: 4%;
-    height: 75%;
+    width: 40px;
     cursor: pointer;
 }
 
@@ -51,7 +50,7 @@ footer {
     text-align: center;
 }
 
-.user-info {
+.creator-info {
     font-family: cursive;
     cursor: default;
 }
@@ -64,7 +63,6 @@ footer {
 .news-seed {
     width: 75%;
     margin: 5% 24% -1%;
-    height: 1000px;
     background-color: khaki;
     overflow: auto;
 }
@@ -103,14 +101,13 @@ button.add-button {
     height: 5%;
     left: 3%;
     top: 2%;
-
     cursor: pointer;
 }
 
 .test-post {
+    position: relative;
+    padding: 1%;
     margin: 5%;
-    width: 90%;
-    height: 30%;
     background-color: silver;
 }
 
@@ -120,7 +117,7 @@ button.add-button {
 }
 
 .post-description {
-    margin: 2% 1%;
+    margin: 2% 0%;
     font-size: 125%;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
@@ -133,6 +130,8 @@ img.post-image {
 }
 
 .post-footer {
+    position: relative;
+    padding: 1%;
     border-top-color: black;
     border-top-width: 20%;
     border-top-style: solid;
@@ -140,7 +139,7 @@ img.post-image {
 
 img.post-like {
     position: relative;
-    width: 2%; 
+    width: 20px; 
     margin: 0.5%;
 }
 
@@ -150,20 +149,8 @@ img.post-like {
     font-style: italic;
 }
 
-button.edit-button {
-    position: relative;
+.post-actions-buttons {
     float: right;
-    right: 9%;
-    top: 6px;
-    text-align: center;
-}
-
-button.delete-button {
-    position: relative;
-    float: right;
-    right: -2%;
-    top: 6px;
-    text-align: center;
 }
 
 button.more-button {
@@ -172,6 +159,7 @@ button.more-button {
     left: 35%;
     height: 5%;
     width: 15%;
+    cursor: pointer;
 }
 
 @media only screen and (max-width: 600px) {
