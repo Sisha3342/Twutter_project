@@ -5,12 +5,13 @@ body {
 
 header {
     z-index: 1;
-    position: fixed;
+    position: sticky;
     background-color: rgb(141, 203, 231);
     width: 100%;
     text-align: center;
     padding: 0.5%;
     top: 0%;
+    margin-bottom: 1%;
 }
 
 h1.site-name {
@@ -22,11 +23,11 @@ h1.site-name {
 
 button.log-out {
     position: relative;
-    font-size: 100%;
+    font-size: 15px;
     float: right;
     margin: 0.5% 5% 0.5% 5%;
-    height: 40px;
-    width: 100px;
+    height: 30px;
+    width: 80px;
     
     cursor: pointer;
 }
@@ -34,64 +35,44 @@ button.log-out {
 .user-info {
     margin: 0.5% 5% 0.5% 10%;
     float: left;
-    font-size: 30px;
+    font-size: 20px;
 }
 
 img.user-icon {
     position: relative;
-    width: 40px;
+    width: 20px;
     cursor: pointer;
 }
 
-footer {
-    background-color: rgb(141, 203, 231);
-    height: 10%;
-    width: 100%;
-    text-align: center;
-}
-
-.creator-info {
-    font-family: cursive;
-    cursor: default;
-}
-
-.date {
-    font-family: cursive;
-    cursor: default;
-}
-
-.news-seed {
-    width: 75%;
-    margin: 5% 24% -1%;
-    background-color: khaki;
-    overflow: auto;
-}
-
 .filters {
-    z-index: -1;
-    position: fixed;
-    margin: 0.1% 0.5%;
-    width: 23%;
-    height: 400px;
+    margin: 6% 0.5% 6%;
+    padding: 0.5%;
+    position: relative;
     background-color: rgb(190, 141, 231);
     text-align: center;
     line-height: 2px;
+    width: 350px;
 }
+
+.filter {
+    margin: 5%;
+    font-style: italic;
+}
+
 
 button.apply-filters {
     position: relative;
-    display: block;
-    bottom: -10%;
-    left: 35%;
-    width: 30%;
-    height: 7%;
-    font-size: 100%;
+    width: 70px;
+    font-size: 15px;
     font-weight: bolder;
     cursor: pointer;
 }
 
-.filters > h1, h3 {
-    cursor: default;
+.news-seed {
+    width: 1150px;
+    margin: 5% 24% -1%;
+    background-color: khaki;
+    overflow: auto;
 }
 
 button.add-button {
@@ -160,6 +141,23 @@ button.more-button {
     height: 5%;
     width: 15%;
     cursor: pointer;
+}
+
+footer {
+    background-color: rgb(141, 203, 231);
+    height: 10%;
+    width: 100%;
+    text-align: center;
+}
+
+.creator-info {
+    font-family: cursive;
+    cursor: default;
+}
+
+.date {
+    font-family: cursive;
+    cursor: default;
 }
 
 @media only screen and (max-width: 600px) {
