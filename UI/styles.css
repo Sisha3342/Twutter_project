@@ -1,16 +1,15 @@
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
+    background-color: blanchedalmond;
 }
 
 header {
     z-index: 1;
     position: sticky;
     background-color: rgb(141, 203, 231);
-    width: 100%;
     text-align: center;
     padding: 0.5%;
-    top: 0%;
     margin-bottom: 0.5%;
 }
 
@@ -49,19 +48,19 @@ img.user-icon {
 .filters {
     vertical-align: top;
     display: inline-block;
-    margin: 0.5% 0.5% 1%;
-    padding: 0.5%;
+    margin: 0.5% 0.5% 1% 0.1%;
+    padding: 1%;
     background-color: rgb(190, 141, 231);
     text-align: center;
     line-height: 2px;
-    width: 350px;
+    width: 25%;
+    /* width: 350px; */
 }
 
 .filter {
     margin: 5%;
     font-style: italic;
 }
-
 
 button.apply-filters {
     width: 70px;
@@ -72,9 +71,8 @@ button.apply-filters {
 
 .news-seed {
     display: inline-block;
-    margin: 0.5% 0.25% 1% 1%;
+    margin: 0.5% 0.1% 0.5% 0.5%;
     padding: 1%;
-    width: 1050px;
     background-color: khaki;
 }
 
@@ -153,6 +151,7 @@ button.more-button {
 }
 
 footer {
+    margin-top: 0.5%;
     background-color: rgb(141, 203, 231);
     width: 100%;
     text-align: center;
@@ -168,106 +167,19 @@ footer {
     cursor: default;
 }
 
-@media only screen and (max-width: 600px) {
+@-ms-viewport {
+    width: device-width;
+}
 
-    header {
-        height: 7%;
-    }
-
-    h1.site-name {
-        font-size: 130%;
-    }
-
-    button.log-out {
-        top: -90%;
-        right: -30%;
-        width: 20%;
-    }
-    h2.username {
-        font-size: 130%;
-        left: -27%;
-        top: -180%;
-    }
-
-    h1.site-name {
-        bottom: 20%;
-    }
-
-    img.user-icon {
-        width: 10%;
-        top: -280%;
-        left: -43%;
-    }
-
-    footer {
-        height: 5%;
-    }
-
-    .user-info {
-        font-size: 70%;
-    }
-
-    .date {
-        font-size: 70%;
-    }
-
+@media only screen and (max-width: 1535) {
     .filters {
-        margin: 6% 0.5%;
-        height: 45%;
+        width: 50%;
+        margin: 0.5% auto;
+        display: block;
     }
 
-    .filters > h1 {
-        font-size: 150%;
-    }
-
-    .filters > h3 {
-        font-size: 100%;
-    }
-
-    .filters > input {
-        width: 80%;
-    }
-
-    button.apply-filters {
-        width: 70%;
-        left: 15%;
-    }
-
-    button.add-button {
-        top: 3%;
-        height: 3%;
-        width: 30%;
-        font-size: 80%;
-    }
-
-    .test-post {
-        margin-top: 15%;
-        height: 22%;
-    }
-
-    .post-header {
-        font-size: 70%;
-    }
-
-    .post-description {
-        font-size: 90%;
-    }
-
-    img.post-image {
-        width: 25%;
-    }
-
-    img.post-like {
-        width: 10%;
-    }
-
-    button.delete-button {
-        font-size: 90%;
-        right: -10%;
-    }
-
-    button.edit-button {
-        font-size: 90%;
-        right: 30%;
+    .news-seed {
+        display: block;
+        margin: auto;
     }
 }
