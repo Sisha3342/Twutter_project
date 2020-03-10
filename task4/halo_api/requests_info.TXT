@@ -1,0 +1,9 @@
+1) get_campaign_missions_request
+	Params: apiKey
+	Result: list of missions in "Halo" (number, name, description, etc.)
+2) get_company_stats_request
+	Params: apiKey, companyID
+	Result: statistics dedicated to a certain company (name, id, creator, members, etc.)
+3) get_user_info_request
+	Params: apiKey, player_tag
+	Result: statistics dedicated to a certain player (gamerTag, user's company, etc.)

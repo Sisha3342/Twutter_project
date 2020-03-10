@@ -1,0 +1,9 @@
+1) get_events_request:
+	Params: apiKey, country code (country, where the events are held)
+	Result: events; each event with it's features (id, title, city, etc.)
+2) get_user_info_request:
+	Params: apiKey, user id (which is passed through the URL)
+	Result: user's info: id, name, age, gender, etc.
+3) get_user_shelves_request:
+	Params: apiKey, user_id
+	Result: books shelves
