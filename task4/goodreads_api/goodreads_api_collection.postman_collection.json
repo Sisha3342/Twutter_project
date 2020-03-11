@@ -1,0 +1,115 @@
+{
+	"info": {
+		"_postman_id": "719e5314-219b-4d7c-ad36-9b45ff6ea2aa",
+		"name": "goodreads_api_collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get_events_request",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "key",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://www.goodreads.com/event/index.xml?key=rUVyVptD3iJ8OGSFCQdy3A&search[country_code]=ZA",
+					"protocol": "https",
+					"host": [
+						"www",
+						"goodreads",
+						"com"
+					],
+					"path": [
+						"event",
+						"index.xml"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "rUVyVptD3iJ8OGSFCQdy3A"
+						},
+						{
+							"key": "search[country_code]",
+							"value": "ZA"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_user_info_request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://www.goodreads.com/user/show/111102579.xml?key=rUVyVptD3iJ8OGSFCQdy3A",
+					"protocol": "https",
+					"host": [
+						"www",
+						"goodreads",
+						"com"
+					],
+					"path": [
+						"user",
+						"show",
+						"111102579.xml"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "rUVyVptD3iJ8OGSFCQdy3A"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_user_shelves_request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://www.goodreads.com/shelf/list.xml?key=rUVyVptD3iJ8OGSFCQdy3A&user_id=7734134",
+					"protocol": "https",
+					"host": [
+						"www",
+						"goodreads",
+						"com"
+					],
+					"path": [
+						"shelf",
+						"list.xml"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "rUVyVptD3iJ8OGSFCQdy3A"
+						},
+						{
+							"key": "user_id",
+							"value": "7734134"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

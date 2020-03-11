@@ -1,0 +1,2 @@
+Params: operation (derive, integrate, etc) and expression itself (like x^2-1) (all is passed through the URL)
+Result: the result of applying the operation to the expression
