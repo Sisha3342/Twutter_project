@@ -3,6 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+
     <servlet>
         <servlet-name>StatusServlet</servlet-name>
         <servlet-class>StatusServlet</servlet-class>
@@ -43,5 +44,24 @@
         <url-pattern>/page</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>Test1Servlet</servlet-name>
+        <servlet-class>Test1Servlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Test1Servlet</servlet-name>
+        <url-pattern>/test1</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Test2Servlet</servlet-name>
+        <servlet-class>Test2Servlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Test2Servlet</servlet-name>
+        <url-pattern>/test2</url-pattern>
+    </servlet-mapping>
 
 </web-app>
