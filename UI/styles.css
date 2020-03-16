@@ -1,0 +1,234 @@
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: blanchedalmond;
+}
+
+header {
+    z-index: 1;
+    position: sticky;
+    background-color: rgb(141, 203, 231);
+    text-align: center;
+    padding: 0.5%;
+    margin-bottom: 0.5%;
+    font-size: 20px;
+    top: 0%;
+}
+
+h1.site-name {
+    display: inline;
+    color: blueviolet;
+    margin: 2.5%;
+    cursor: default;
+}
+
+button.log-out {
+    float: right;
+    margin: 0.5% 5% 0.5% 2.5%;
+    font-size: 18px;
+    width: 80px;
+    cursor: pointer;
+}
+
+.user-info {
+    margin: 0.5% 2.5% 0.5% 10%;
+    float: left;
+}
+
+img.user-icon {
+    width: 20px;
+    cursor: pointer;
+}
+
+.content {
+    margin: 0.5%;
+    padding: 0.5%;
+}
+
+.filters {
+    vertical-align: top;
+    display: inline-block;
+    margin: 0.5% 0.5% 1% 0.1%;
+    padding: 1%;
+    background-color: rgb(190, 141, 231);
+    text-align: center;
+    line-height: 2px;
+    width: 25%;
+}
+
+.filter {
+    margin: 5%;
+    font-style: italic;
+}
+
+button.apply-filters {
+    width: 70px;
+    font-size: 15px;
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+.news-seed {
+    display: inline-block;
+    margin: 0.5% 0.1% 0.5% 0.5%;
+    padding: 1%;
+    background-color: khaki;
+}
+
+button.add-button {
+    display: block;
+    margin: auto;
+    position: relative;
+    font-size: 20px;
+    width: 120px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.test-post {
+    position: relative;
+    padding: 1%;
+    margin: 1% 5%;
+    background-color: silver;
+}
+
+.post-header {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 100%;
+}
+
+.post-description {
+    margin: 2% 0%;
+    font-size: 125%;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+img.post-image {
+    margin: -1% 2%;
+    width: 10%;
+    height: 30%;
+}
+
+.post-footer {
+    padding: 1%;
+    border-top-color: black;
+    border-top-width: 20%;
+    border-top-style: solid;
+}
+
+img.post-like {
+    width: 20px; 
+}
+
+.likes-count {
+    font-style: italic;
+}
+
+.post-actions-buttons {
+    float: right;
+}
+
+button.action-button {
+    width: 60px;
+    height: 30px;
+    cursor: pointer;
+}
+
+button.more-button {
+    display: block;
+    margin: auto;
+
+    font-size: 20px;
+    width: 120px;
+    height: 40px;
+    cursor: pointer;
+}
+
+footer {
+    margin-top: 0.5%;
+    background-color: rgb(141, 203, 231);
+    width: 100%;
+    text-align: center;
+}
+
+.creator-info {
+    font-family: cursive;
+    cursor: default;
+}
+
+.date {
+    font-family: cursive;
+    cursor: default;
+}
+
+@media only screen and (max-width: 1535) {
+    .filters {
+        width: 50%;
+        margin: 0.5% auto;
+        display: block;
+    }
+
+    .news-seed {
+        display: block;
+        margin: auto;
+    }
+}
+
+@media only screen and (max-width: 486) {
+    header {
+        font-size: 10px;
+    }
+
+    header > button.log-out {
+        font-size: 10px;
+        width: 50px;
+        margin: 1%;
+    }
+
+    .user-info {
+        margin: 1%;
+    }
+
+    .filters {
+        font-size: 10px;
+    }
+
+    .filters > button.apply-filters {
+        font-size: 12px;
+    }
+
+    .filter > input {
+        width: 60px;
+    }
+
+    .news-seed {
+        font-size: 10px;
+    }
+
+    .news-seed > button {
+        font-size: 15px;
+        height: 25px;
+        width: 90px;
+    }
+
+    .likes-display > img {
+        width: 15px;
+    }
+
+    .likes-count {
+        font-size: 7px;
+    }
+
+    .post-actions-buttons > button {
+        font-size: 10px;
+        height: 20px;
+    }
+
+    .test-post {
+        margin: 5%;
+    }
+
+    footer {
+        font-size: 10px;
+    }
+}
