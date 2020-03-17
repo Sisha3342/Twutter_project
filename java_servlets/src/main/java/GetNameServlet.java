@@ -9,6 +9,5 @@ public class GetNameServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter writer = response.getWriter();
         writer.println("Name is " + request.getParameter("name"));
-        writer.close();
     }
 }
