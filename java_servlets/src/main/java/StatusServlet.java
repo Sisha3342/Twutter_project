@@ -10,6 +10,5 @@ public class StatusServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter writer = response.getWriter();
         writer.println("<p style=\"color:red\">Application is running</p>");
-        writer.close();
     }
 }
