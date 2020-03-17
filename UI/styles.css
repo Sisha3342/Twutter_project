@@ -161,7 +161,7 @@ footer {
     cursor: default;
 }
 
-@media only screen and (max-width: 1535) {
+@media only screen and (max-width: 1535px) {
     .filters {
         width: 50%;
         margin: 0.5% auto;
@@ -174,7 +174,7 @@ footer {
     }
 }
 
-@media only screen and (max-width: 486) {
+@media only screen and (max-width: 486px) {
     header {
         font-size: 10px;
     }
