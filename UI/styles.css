@@ -111,9 +111,7 @@ img.post-image {
 
 .post-footer {
     padding: 1%;
-    border-top-color: black;
-    border-top-width: 20%;
-    border-top-style: solid;
+    border-top: 20% solid black
 }
 
 img.post-like {
@@ -137,7 +135,6 @@ button.action-button {
 button.more-button {
     display: block;
     margin: auto;
-
     font-size: 20px;
     width: 120px;
     height: 40px;
