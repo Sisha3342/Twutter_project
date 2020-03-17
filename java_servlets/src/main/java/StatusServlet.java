@@ -9,6 +9,7 @@ public class StatusServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter writer = response.getWriter();
-        writer.println("<p style=\"color:red\">Application is running</p>");
+        String message = "<p style=\"color:red\">Application is running</p>";
+        writer.println(message);
     }
 }
