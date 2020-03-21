@@ -75,10 +75,13 @@
             case "author":
                 return typeof post.author === "string" && post.author.length !== 0;
             case "hashTags":
-                return post.hashTags.every(tag => typeof tag === "string");
+                return post.hashTags && post.hashTags.every(tag => typeof tag === "string");
             case "likes":
-                return post.likes.every(tag => typeof tag === "string");
-
+                return post.hashTags && post.likes.every(tag => typeof tag === "string");
+            case "photoLink":
+                return typeof post.photoLink === "string";
+            default:
+                return false;
         }
     }
 
@@ -139,4 +142,39 @@
 
         return false;
     }
+
+    let postsGot = getPosts(1, 5, {"hashTags": ["js"]})
+
+    console.log("----------------------------------------------------");
+    console.log("top 5 posts (1 skipped) with hashTags containing js");
+    postsGot.forEach(function (post) {
+        console.log(post);
+    })
+
+    console.log("----------------------------------------------------");
+    console.log("get first post test");
+    console.log(getPost("0"));
+
+    console.log("----------------------------------------------------");
+    console.log("validate valid post");
+    console.log(validatePost({id: "2", createdAt: new Date(),
+                                    description: "test", author: "sasha", hashTags: [], likes: []}));
+    console.log("validate invalid post");
+    console.log(validatePost({id: "1"}));
+
+    console.log("----------------------------------------------------");
+    console.log("Add post and then get it");
+    addPost({id: "123", createdAt: new Date(),
+                    description: "test description", author: "alex", hashTags: [], likes: []});
+    console.log(getPost("123"));
+
+    console.log("----------------------------------------------------");
+    console.log("Edit 0'th post (already exists");
+    editPost("0", {photoLink: "edited link"})
+    console.log(getPost("0"))
+
+    console.log("----------------------------------------------------");
+    console.log("test remove 0'th post");
+    console.log(removePost("0"));
+    console.log("----------------------------------------------------");
 }());
