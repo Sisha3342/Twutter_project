@@ -3,7 +3,7 @@ class PostsList {
         this._posts = posts.concat();
     }
 
-    getPage(skip=0, top=10, filterConfig=undefined) {
+    getPage(skip=0, top=this._posts.length, filterConfig=undefined) {
         let postsToReturn = this._posts.concat();
 
         if (filterConfig) {
@@ -60,12 +60,14 @@ class PostsList {
     }
 
     static validate(post) {
-        return validatePostProperty(post, "id") &&
-               validatePostProperty(post, "description") &&
-               validatePostProperty(post, "createdAt") &&
-               validatePostProperty(post, "author") &&
-               validatePostProperty(post, "hashTags") &&
-               validatePostProperty(post, "likes");
+        let validProperty = PostsList._validate_property;
+
+        return validProperty(post, "id") &&
+               validProperty(post, "description") &&
+               validProperty(post, "createdAt") &&
+               validProperty(post, "author") &&
+               validProperty(post, "hashTags") &&
+               validProperty(post, "likes");
     }
 
     add(post) {
@@ -166,3 +168,42 @@ function* generatePosts(postsCount) {
 }
 
 testPosts = new PostsList([...generatePosts(20)]);
+
+console.log("----------------------------------------------------");
+console.log("top 5 posts (1 skipped) with hashTags containing js");
+testPosts.getPage(1, 5, {"hashTags": ["js"]}).forEach(function (post) {
+    console.log(post);
+});
+
+console.log("----------------------------------------------------");
+console.log("get first post test");
+console.log(testPosts.get("0"));
+
+console.log("----------------------------------------------------");
+console.log("validate valid post");
+console.log(PostsList.validate({id: "2", createdAt: new Date(),
+     description: "test", author: "sasha", hashTags: [], likes: []}));
+console.log("validate invalid post");
+console.log(PostsList.validate({id: "1"}));
+
+console.log("----------------------------------------------------");
+console.log("Add post and then get it");
+testPosts.add({id: "123", createdAt: new Date(),
+    description: "test description", author: "alex", hashTags: [], likes: []});
+console.log(testPosts.get("123"));
+
+console.log("----------------------------------------------------");
+console.log("Edit 0'th post (already exists");
+testPosts.edit("0", {photoLink: "edited link"});
+console.log(testPosts.get("0"));
+
+console.log("----------------------------------------------------");
+console.log("test remove 0'th post");
+console.log(testPosts.remove("0"));
+console.log("----------------------------------------------------");
+
+console.log("----------------------------------------------------");
+console.log("Test clearing the page");
+testPosts.clear();
+console.log("Array length: %d", testPosts.getPage().length);
+console.log("----------------------------------------------------");
