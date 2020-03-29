@@ -1,6 +1,6 @@
 class PostsList {
     constructor(posts) {
-        this._posts = posts;
+        this._posts = posts.concat();
     }
 
     getPage(skip=0, top=10, filterConfig=undefined) {
@@ -116,4 +116,53 @@ class PostsList {
 
         return true;
     }
+
+    addAll(newPosts) {
+        let invalidPosts = [];
+
+        for (let post in newPosts) {
+            if (PostsList.validate(post)) {
+                this.add(post);
+            }
+            else {
+                invalidPosts.push(post);
+            }
+        }
+
+        return invalidPosts;
+    }
+
+    clear() {
+        this._posts = [];
+    }
 }
+
+function* generatePosts(postsCount) {
+    let date = new Date;
+
+    for(let i = 0; i < postsCount; i++) {
+        if (i % 2 === 0) {
+            yield {
+                id: i.toString(),
+                description: "I'm post number " + i,
+                createdAt: new Date(date.getTime() + i * 10000),
+                author: "Sasha" + i,
+                hashTags: ["js" + i, "task6"],
+                likes: ["Misha", "Alex", "Mike"]
+            };
+        }
+        else {
+            yield {
+                id: i.toString(),
+                description: "I'm post number " + i,
+                createdAt: new Date(date.getTime() - i * 10000),
+                author: "Alex",
+                photoLink: "link number " + i,
+                hashTags: ["js", "task6"],
+                likes: ["Sasha"]
+            };
+        }
+    }
+}
+
+testPosts = new PostsList([...generatePosts(20)]);
