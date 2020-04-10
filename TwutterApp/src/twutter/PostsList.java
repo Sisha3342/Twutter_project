@@ -58,6 +58,33 @@ public class PostsList {
         return invalidPosts;
     }
 
+    public boolean edit(String id, Post post) {
+        Post foundPost = this.getPost(id);
+
+        if (post == null || post.getId() != null ||post.getAuthor() != null ||
+                post.getCreatedAt() != null) {
+            return false;
+        }
+
+        if (post.getDescription() != null) {
+            foundPost.setDescription(post.getDescription());
+        }
+
+        if (post.getPhotoLink() != null) {
+            post.setPhotoLink(post.getPhotoLink());
+        }
+
+        if (post.getHashTags() != null) {
+            foundPost.setHashTags(post.getHashTags());
+        }
+
+        if (post.getLikes() != null) {
+            foundPost.setLikes(post.getLikes());
+        }
+
+        return true;
+    }
+
     public void clear() {
         posts.clear();
     }
