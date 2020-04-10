@@ -1,12 +1,10 @@
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.stream.Collectors;
 
 public class PostActionServlet extends HttpServlet {
     private static PostsList posts = new PostsList();
@@ -26,7 +24,7 @@ public class PostActionServlet extends HttpServlet {
         String parameterName = "id";
         String postId = req.getParameter(parameterName);
 
-        resp.getWriter().print(String.valueOf(posts.remove(postId)));
+        resp.getWriter().print(posts.remove(postId));
     }
 
     @Override
@@ -35,5 +33,15 @@ public class PostActionServlet extends HttpServlet {
         Post postToAdd = (new Gson()).fromJson(body, Post.class);
 
         resp.getWriter().write(String.valueOf(posts.add(postToAdd)));
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String parameterName = "id";
+        String postId = req.getParameter(parameterName);
+
+        Post editedPost = (new Gson()).fromJson(req.getReader().readLine(), Post.class);
+
+        resp.getWriter().print(posts.edit(postId, editedPost));
     }
 }
