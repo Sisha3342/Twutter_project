@@ -5,6 +5,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PostActionServlet extends HttpServlet {
     private static PostsList posts = new PostsList();
@@ -29,10 +32,20 @@ public class PostActionServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String body = req.getReader().readLine();
-        Post postToAdd = (new Gson()).fromJson(body, Post.class);
+        String[] reqUri = req.getRequestURI().split("/");
 
-        resp.getWriter().write(String.valueOf(posts.add(postToAdd)));
+        if (reqUri.length == 3 && reqUri[2].equals("search")) {
+            Gson gson = new Gson();
+
+            resp.getWriter().print(posts.getPosts().stream().map(gson::toJson).
+                    collect(Collectors.joining("\n")));
+        }
+        else {
+            String body = req.getReader().readLine();
+            Post postToAdd = (new Gson()).fromJson(body, Post.class);
+
+            resp.getWriter().write(String.valueOf(posts.add(postToAdd)));
+        }
     }
 
     @Override

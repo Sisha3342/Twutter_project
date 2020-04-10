@@ -12,7 +12,7 @@
 
   <servlet-mapping>
     <servlet-name>PostAction</servlet-name>
-    <url-pattern>/tweets</url-pattern>
+    <url-pattern>/tweets/*</url-pattern>
   </servlet-mapping>
 
 </web-app>
