@@ -19,4 +19,11 @@ public class PostActionServlet extends HttpServlet {
         resp.getWriter().print((new Gson()).toJson(postToReturn));
     }
 
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String parameterName = "id";
+        String postId = req.getParameter(parameterName);
+
+        resp.getWriter().print(String.valueOf(posts.remove(postId)));
+    }
 }
