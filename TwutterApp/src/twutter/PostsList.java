@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class PostsList {
     private List<Post> posts;
@@ -15,7 +13,13 @@ public class PostsList {
     }
 
     public Post getPost(String id) {
-        return posts.get(Integer.parseInt(id));
+        for (Post post: posts) {
+            if (post.getId().equals(id)) {
+                return post;
+            }
+        }
+
+        return null;
     }
 
     public static boolean validate(Post post) {
