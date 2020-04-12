@@ -172,6 +172,17 @@ class PostDiv {
         this._post = post;
     } 
 
+    getPostDiv() {
+        let post = document.createElement("div");
+        post.className = "test-post";
+
+        post.append(this._getPostHeader());
+        post.append(this._getPostDescription());
+        post.append(this._getPostFooter());
+
+        return post;
+    }
+
     _getPostHeader() {
         let postHeader = document.createElement("div");
         postHeader.className = "post-header";
