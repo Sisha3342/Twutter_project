@@ -201,6 +201,41 @@ class PostDiv {
 
         return postDescription;
     }
+
+    _getPostFooter() {
+        let postFooter = document.createElement("div");
+        postFooter.className = "post-footer";
+
+        let likesDisplay = document.createElement("span");
+        likesDisplay.className = "likes-display";
+
+        likesDisplay.innerHTML = '<img class="post-like" src="images/like_image.png">';
+
+        let likesCount = document.createElement("span");
+        likesCount.className = "likes-count";
+        likesCount.textContent = this._post.likes.length;
+
+        likesDisplay.append(likesCount);
+
+        postFooter.append(likesDisplay);
+        
+        let postButtons = document.createElement("div");
+        postButtons.className = "post-actions-buttons";
+
+        let editButton = document.createElement("button");
+        editButton.className = "action-button";
+        editButton.textContent = "Edit";
+
+        let deleteButton = document.createElement("button");
+        deleteButton.className = "action-button";
+        deleteButton.textContent = "Delete";
+
+        postButtons.append(editButton);
+        postButtons.append(deleteButton);
+        postFooter.append(postButtons);
+
+        return postFooter;
+    }
 }
 
 testPosts = new PostsList([...generatePosts(20)]);
