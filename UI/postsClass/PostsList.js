@@ -249,6 +249,8 @@ class PostDiv {
     }
 }
 
+testPosts = new PostsList([...generatePosts(20)]);
+
 class View {
     constructor() {
         this._is_authorized = false;
@@ -292,4 +294,33 @@ class View {
     }
 }
 
-testPosts = new PostsList([...generatePosts(20)]);
+let view = new View();
+view.refreshPage();
+
+
+function addPost(post) {
+    if (view._postsList.add(post)) {
+        view.refreshPage();
+        return true;
+    }
+
+    return false;
+}
+
+function removePost(id) {
+    if (view._postsList.remove(id)) {
+        view.refreshPage();
+        return true;
+    }
+
+    return false;
+}
+
+function editPost(id, post) {
+    if (view._postsList.edit(id, post)) {
+        refreshPage();
+        return true;
+    }
+
+    return false;
+}
