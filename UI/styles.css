@@ -28,6 +28,7 @@ button.log-out {
     font-size: 18px;
     width: 80px;
     cursor: pointer;
+    visibility: visible;
 }
 
 .user-info {
@@ -73,6 +74,7 @@ button.apply-filters {
     margin: 0.5% 0.1% 0.5% 0.5%;
     padding: 1%;
     background-color: khaki;
+    width: 69%;
 }
 
 button.add-button {
@@ -116,10 +118,12 @@ img.post-image {
 
 img.post-like {
     width: 20px; 
+    margin: 1px;
 }
 
 .likes-count {
     font-style: italic;
+    margin: 1px;
 }
 
 .post-actions-buttons {
@@ -130,6 +134,7 @@ button.action-button {
     width: 60px;
     height: 30px;
     cursor: pointer;
+    margin: 1px;
 }
 
 button.more-button {

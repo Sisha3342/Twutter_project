@@ -159,7 +159,7 @@ function* generatePosts(postsCount) {
                 description: "I'm post number " + i,
                 createdAt: new Date(date.getTime() - i * 10000),
                 author: "Alex",
-                photoLink: "link number " + i,
+                photoLink: "images/forest_image.png",
                 hashTags: ["js", "task6"],
                 likes: ["Sasha"]
             };
@@ -253,7 +253,7 @@ testPosts = new PostsList([...generatePosts(20)]);
 
 class View {
     constructor() {
-        this._is_authorized = false;
+        this._is_authorized = true;
         this._posts = document.querySelector(".posts");
         this._postsList = testPosts;
     }
