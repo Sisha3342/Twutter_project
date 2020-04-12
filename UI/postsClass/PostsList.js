@@ -249,4 +249,34 @@ class PostDiv {
     }
 }
 
+class View {
+    constructor() {
+        this._is_authorized = false;
+        this._posts = document.querySelector(".posts");
+        this._postsList = testPosts;
+    }
+
+    _authorizedUserDisplay() {
+        if (!this._is_authorized) {
+            document.querySelector(".log-out").style.visibility = "hidden";
+            document.querySelector(".user-info").style.visibility = "hidden";
+        }
+    }
+
+    _authorizedPostDisplay() {
+       if (!this._is_authorized) {
+           let actionButtons = document.querySelectorAll(".post-actions-buttons");
+           actionButtons.forEach(element => {
+               element.style.visibility = "hidden";
+           });
+       }
+    }
+
+    _authorizedAddDisplay() {
+        if (!this._is_authorized) {
+            document.querySelector(".add-button").style.visibility = "hidden";
+        }
+    }
+}
+
 testPosts = new PostsList([...generatePosts(20)]);
