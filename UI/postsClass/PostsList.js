@@ -183,6 +183,24 @@ class PostDiv {
 
         return postHeader;
     }
+
+    _getPostDescription() {
+        let postDescription = document.createElement("div");
+        postDescription.className = "post-description";
+
+        postDescription.innerHTML = "<p>" + this._post.description + "</p>";
+
+        if (this._post.hasOwnProperty("photoLink")) {
+            let postDescriptionImage = document.createElement("img");
+            postDescriptionImage.className = "post-image";
+            postDescriptionImage.setAttribute("src", this._post.photoLink);
+
+
+            postDescription.append(postDescriptionImage);
+        }
+
+        return postDescription;
+    }
 }
 
 testPosts = new PostsList([...generatePosts(20)]);
