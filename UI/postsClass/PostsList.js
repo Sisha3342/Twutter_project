@@ -167,43 +167,22 @@ function* generatePosts(postsCount) {
     }
 }
 
+class PostDiv {
+    constructor(post, isAuthorized) {
+        this._post = post;
+    } 
+
+    _getPostHeader() {
+        let postHeader = document.createElement("div");
+        postHeader.className = "post-header";
+
+        postHeader.innerHTML = "<h3>" + this._post.author + ", " + this._post.createdAt.toLocaleString() + "</h3>";
+        postHeader.innerHTML += "<i>" + this._post.hashTags.map(post => {
+            return "#" + post;
+        }); + "</i>";
+
+        return postHeader;
+    }
+}
+
 testPosts = new PostsList([...generatePosts(20)]);
-
-console.log("----------------------------------------------------");
-console.log("top 5 posts (1 skipped) with hashTags containing js");
-testPosts.getPage(1, 5, {"hashTags": ["js"]}).forEach(function (post) {
-    console.log(post);
-});
-
-console.log("----------------------------------------------------");
-console.log("get first post test");
-console.log(testPosts.get("0"));
-
-console.log("----------------------------------------------------");
-console.log("validate valid post");
-console.log(PostsList.validate({id: "2", createdAt: new Date(),
-     description: "test", author: "sasha", hashTags: [], likes: []}));
-console.log("validate invalid post");
-console.log(PostsList.validate({id: "1"}));
-
-console.log("----------------------------------------------------");
-console.log("Add post and then get it");
-testPosts.add({id: "123", createdAt: new Date(),
-    description: "test description", author: "alex", hashTags: [], likes: []});
-console.log(testPosts.get("123"));
-
-console.log("----------------------------------------------------");
-console.log("Edit 0'th post (already exists");
-testPosts.edit("0", {photoLink: "edited link"});
-console.log(testPosts.get("0"));
-
-console.log("----------------------------------------------------");
-console.log("test remove 0'th post");
-console.log(testPosts.remove("0"));
-console.log("----------------------------------------------------");
-
-console.log("----------------------------------------------------");
-console.log("Test clearing the page");
-testPosts.clear();
-console.log("Array length: %d", testPosts.getPage().length);
-console.log("----------------------------------------------------");
