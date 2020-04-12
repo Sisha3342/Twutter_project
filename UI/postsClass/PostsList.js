@@ -256,6 +256,19 @@ class View {
         this._postsList = testPosts;
     }
 
+    refreshPage() {
+        this._authorizedUserDisplay();
+        this._authorizedAddDisplay();
+
+        this._posts.innerHTML = "";
+
+        this._postsList.getPage().forEach(post => {
+            this._posts.append((new PostDiv(post)).getPostDiv());
+        });
+
+        this._authorizedPostDisplay();
+    }
+
     _authorizedUserDisplay() {
         if (!this._is_authorized) {
             document.querySelector(".log-out").style.visibility = "hidden";
