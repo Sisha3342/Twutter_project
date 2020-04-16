@@ -1,3 +1,5 @@
+package twutter;
+
 import java.util.*;
 
 public class PostsList {

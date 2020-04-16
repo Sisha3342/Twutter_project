@@ -7,37 +7,37 @@
 
   <servlet>
     <servlet-name>PostAction</servlet-name>
-    <servlet-class>PostActionServlet</servlet-class>
+    <servlet-class>twutter.PostActionServlet</servlet-class>
   </servlet>
 
   <servlet>
     <servlet-name>CheckServlet</servlet-name>
-    <servlet-class>CheckServlet</servlet-class>
+    <servlet-class>twutter.CheckServlet</servlet-class>
   </servlet>
 
   <servlet>
     <servlet-name>GetNameServlet</servlet-name>
-    <servlet-class>GetNameServlet</servlet-class>
+    <servlet-class>twutter.GetNameServlet</servlet-class>
   </servlet>
 
   <servlet>
     <servlet-name>PageServlet</servlet-name>
-    <servlet-class>PageServlet</servlet-class>
+    <servlet-class>twutter.PageServlet</servlet-class>
   </servlet>
 
   <servlet>
     <servlet-name>StatusServlet</servlet-name>
-    <servlet-class>StatusServlet</servlet-class>
+    <servlet-class>twutter.StatusServlet</servlet-class>
   </servlet>
 
   <servlet>
     <servlet-name>Test1Servlet</servlet-name>
-    <servlet-class>Test1Servlet</servlet-class>
+    <servlet-class>twutter.Test1Servlet</servlet-class>
   </servlet>
 
   <servlet>
     <servlet-name>Test2Servlet</servlet-name>
-    <servlet-class>Test2Servlet</servlet-class>
+    <servlet-class>twutter.Test2Servlet</servlet-class>
   </servlet>
 
   <servlet-mapping>
@@ -74,14 +74,5 @@
     <servlet-name>Test2Servlet</servlet-name>
     <url-pattern>/test2</url-pattern>
   </servlet-mapping>
-<!--  <servlet>-->
-<!--    <servlet-name>StatusServlet</servlet-name>-->
-<!--    <servlet-class>StatusServlet</servlet-class>-->
-<!--  </servlet>-->
-
-<!--  <servlet-mapping>-->
-<!--    <servlet-name>StatusServlet</servlet-name>-->
-<!--    <url-pattern>/status</url-pattern>-->
-<!--  </servlet-mapping>-->
 
 </web-app>
