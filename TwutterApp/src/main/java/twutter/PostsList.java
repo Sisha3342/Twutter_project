@@ -8,10 +8,17 @@ public class PostsList {
     public PostsList() {
         posts = new ArrayList<>();
 
-        this.add(new Post("1", "abc", new Date(), "Sisha", "link",
-                List.of("tag1", "tag2"), List.of("Alex", "Misha")));
-        this.add(new Post("2", "abc", new Date(), "Alex", "link123",
-                List.of("tag1", "tag3"), List.of("Alex")));
+        this.add(new Post.Builder("1", "abc", new Date(), "Sasha")
+                .setPhotoLink("link")
+                .setHashTags(List.of("tag1", "tag2"))
+                .setLikes(List.of("Alex", "Misha"))
+                .build());
+
+        this.add(new Post.Builder("2", "abc", new Date(), "Alex")
+                .setPhotoLink("link123")
+                .setHashTags(List.of("tag1", "tag3"))
+                .setLikes(List.of("Alex"))
+                .build());
     }
 
     public Post getPost(String id) {

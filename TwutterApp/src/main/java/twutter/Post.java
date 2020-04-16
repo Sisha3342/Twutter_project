@@ -12,31 +12,55 @@ public class Post {
     private List<String> hashTags;
     private List<String> likes;
 
-    public Post(String id, String description, Date createdAt, String author, String photoLink,
-                List<String> hashTags, List<String> likes) {
-        this.id = id;
-        this.description = description;
-        this.createdAt = (Date)createdAt.clone();
-        this.author = author;
-        this.photoLink = photoLink;
-        this.hashTags = List.copyOf(hashTags);
-        this.likes = List.copyOf(likes);
+    public static class Builder {
+        private String id;
+        private String description;
+        private Date createdAt;
+        private String author;
+
+        private String photoLink = null;
+        private List<String> hashTags = null;
+        private List<String> likes = null;
+
+        public Builder(String id, String description, Date createdAt, String author) {
+            this.id = id;
+            this.description = description;
+            this.createdAt = (Date)createdAt.clone();
+            this.author = author;
+        }
+
+        public Builder setPhotoLink(String photoLink) {
+            this.photoLink = photoLink;
+            return this;
+        }
+
+        public Builder setHashTags(List<String> hashTags) {
+            this.hashTags = List.copyOf(hashTags);
+            return this;
+        }
+
+        public Builder setLikes(List<String> likes) {
+            this.likes = List.copyOf(likes);
+            return this;
+        }
+
+        public Post build() {
+            return new Post(this);
+        }
     }
 
-    public void setId(String id) {
-        this.id = id;
+    private Post(Builder builder) {
+        this.id = builder.id;
+        this.description = builder.description;
+        this.createdAt = builder.createdAt;
+        this.author = builder.author;
+        this.photoLink = builder.photoLink;
+        this.hashTags = builder.hashTags;
+        this.likes = builder.likes;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = (Date)createdAt.clone();
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
     }
 
     public void setPhotoLink(String photoLink) {
