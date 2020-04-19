@@ -159,7 +159,7 @@ function* generatePosts(postsCount) {
                 description: "I'm post number " + i,
                 createdAt: new Date(date.getTime() - i * 10000),
                 author: "Alex",
-                photoLink: "link number " + i,
+                photoLink: "images/forest_image.png",
                 hashTags: ["js", "task6"],
                 likes: ["Sasha"]
             };
@@ -167,43 +167,160 @@ function* generatePosts(postsCount) {
     }
 }
 
+class PostDiv {
+    constructor(post, isAuthorized) {
+        this._post = post;
+    } 
+
+    getPostDiv() {
+        let post = document.createElement("div");
+        post.className = "test-post";
+
+        post.append(this._getPostHeader());
+        post.append(this._getPostDescription());
+        post.append(this._getPostFooter());
+
+        return post;
+    }
+
+    _getPostHeader() {
+        let postHeader = document.createElement("div");
+        postHeader.className = "post-header";
+
+        postHeader.innerHTML = "<h3>" + this._post.author + ", " + this._post.createdAt.toLocaleString() + "</h3>";
+        postHeader.innerHTML += "<i>" + this._post.hashTags.map(post => {
+            return "#" + post;
+        }); + "</i>";
+
+        return postHeader;
+    }
+
+    _getPostDescription() {
+        let postDescription = document.createElement("div");
+        postDescription.className = "post-description";
+
+        postDescription.innerHTML = "<p>" + this._post.description + "</p>";
+
+        if (this._post.hasOwnProperty("photoLink")) {
+            let postDescriptionImage = document.createElement("img");
+            postDescriptionImage.className = "post-image";
+            postDescriptionImage.setAttribute("src", this._post.photoLink);
+
+
+            postDescription.append(postDescriptionImage);
+        }
+
+        return postDescription;
+    }
+
+    _getPostFooter() {
+        let postFooter = document.createElement("div");
+        postFooter.className = "post-footer";
+
+        let likesDisplay = document.createElement("span");
+        likesDisplay.className = "likes-display";
+
+        likesDisplay.innerHTML = '<img class="post-like" src="images/like_image.png">';
+
+        let likesCount = document.createElement("span");
+        likesCount.className = "likes-count";
+        likesCount.textContent = this._post.likes.length;
+
+        likesDisplay.append(likesCount);
+
+        postFooter.append(likesDisplay);
+        
+        let postButtons = document.createElement("div");
+        postButtons.className = "post-actions-buttons";
+
+        let editButton = document.createElement("button");
+        editButton.className = "action-button";
+        editButton.textContent = "Edit";
+
+        let deleteButton = document.createElement("button");
+        deleteButton.className = "action-button";
+        deleteButton.textContent = "Delete";
+
+        postButtons.append(editButton);
+        postButtons.append(deleteButton);
+        postFooter.append(postButtons);
+
+        return postFooter;
+    }
+}
+
 testPosts = new PostsList([...generatePosts(20)]);
 
-console.log("----------------------------------------------------");
-console.log("top 5 posts (1 skipped) with hashTags containing js");
-testPosts.getPage(1, 5, {"hashTags": ["js"]}).forEach(function (post) {
-    console.log(post);
-});
+class View {
+    constructor() {
+        this._is_authorized = true;
+        this._posts = document.querySelector(".posts");
+        this._postsList = testPosts;
+    }
 
-console.log("----------------------------------------------------");
-console.log("get first post test");
-console.log(testPosts.get("0"));
+    refreshPage() {
+        this._authorizedUserDisplay();
+        this._authorizedAddDisplay();
 
-console.log("----------------------------------------------------");
-console.log("validate valid post");
-console.log(PostsList.validate({id: "2", createdAt: new Date(),
-     description: "test", author: "sasha", hashTags: [], likes: []}));
-console.log("validate invalid post");
-console.log(PostsList.validate({id: "1"}));
+        this._posts.innerHTML = "";
 
-console.log("----------------------------------------------------");
-console.log("Add post and then get it");
-testPosts.add({id: "123", createdAt: new Date(),
-    description: "test description", author: "alex", hashTags: [], likes: []});
-console.log(testPosts.get("123"));
+        this._postsList.getPage().forEach(post => {
+            this._posts.append((new PostDiv(post)).getPostDiv());
+        });
 
-console.log("----------------------------------------------------");
-console.log("Edit 0'th post (already exists");
-testPosts.edit("0", {photoLink: "edited link"});
-console.log(testPosts.get("0"));
+        this._authorizedPostDisplay();
+    }
 
-console.log("----------------------------------------------------");
-console.log("test remove 0'th post");
-console.log(testPosts.remove("0"));
-console.log("----------------------------------------------------");
+    _authorizedUserDisplay() {
+        if (!this._is_authorized) {
+            document.querySelector(".log-out").style.visibility = "hidden";
+            document.querySelector(".user-info").style.visibility = "hidden";
+        }
+    }
 
-console.log("----------------------------------------------------");
-console.log("Test clearing the page");
-testPosts.clear();
-console.log("Array length: %d", testPosts.getPage().length);
-console.log("----------------------------------------------------");
+    _authorizedPostDisplay() {
+       if (!this._is_authorized) {
+           let actionButtons = document.querySelectorAll(".post-actions-buttons");
+           actionButtons.forEach(element => {
+               element.style.visibility = "hidden";
+           });
+       }
+    }
+
+    _authorizedAddDisplay() {
+        if (!this._is_authorized) {
+            document.querySelector(".add-button").style.visibility = "hidden";
+        }
+    }
+}
+
+let view = new View();
+view.refreshPage();
+
+
+function addPost(post) {
+    if (view._postsList.add(post)) {
+        view.refreshPage();
+        return true;
+    }
+
+    return false;
+}
+
+function removePost(id) {
+    if (view._postsList.remove(id)) {
+        view.refreshPage();
+        return true;
+    }
+
+    return false;
+}
+
+function editPost(id, post) {
+    if (view._postsList.edit(id, post)) {
+        refreshPage();
+        return true;
+    }
+
+    return false;
+}
