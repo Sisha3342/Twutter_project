@@ -8,7 +8,7 @@ class PostsList {
 
         if (filterConfig) {
             for(let property in filterConfig) {
-                if (property === "hashTags") {
+                if (property === 'hashTags') {
                     for(let i = 0; i < filterConfig.hashTags.length; i++) {
                         postsToReturn = postsToReturn.filter(post => post.hashTags.includes(filterConfig.hashTags[i]))
                     }
@@ -40,20 +40,20 @@ class PostsList {
 
     static _validate_property(post, property) {
         switch (property) {
-            case "id":
-                return typeof post.id === "string";
-            case "description":
-                return typeof post.description === "string" && post.description.length < 200;
-            case "createdAt":
+            case 'id':
+                return typeof post.id === 'string';
+            case 'description':
+                return typeof post.description === 'string' && post.description.length < 200;
+            case 'createdAt':
                 return Object.prototype.toString.call(post.createdAt) === '[object Date]';
-            case "author":
-                return typeof post.author === "string" && post.author.length !== 0;
-            case "hashTags":
-                return post.hashTags && post.hashTags.every(tag => typeof tag === "string");
-            case "likes":
-                return post.hashTags && post.likes.every(tag => typeof tag === "string");
-            case "photoLink":
-                return typeof post.photoLink === "string";
+            case 'author':
+                return typeof post.author === 'string' && post.author.length !== 0;
+            case 'hashTags':
+                return post.hashTags && post.hashTags.every(tag => typeof tag === 'string');
+            case 'likes':
+                return post.hashTags && post.likes.every(tag => typeof tag === 'string');
+            case 'photoLink':
+                return typeof post.photoLink === 'string';
             default:
                 return false;
         }
@@ -62,12 +62,12 @@ class PostsList {
     static validate(post) {
         let validProperty = PostsList._validate_property;
 
-        return validProperty(post, "id") &&
-               validProperty(post, "description") &&
-               validProperty(post, "createdAt") &&
-               validProperty(post, "author") &&
-               validProperty(post, "hashTags") &&
-               validProperty(post, "likes");
+        return validProperty(post, 'id') &&
+               validProperty(post, 'description') &&
+               validProperty(post, 'createdAt') &&
+               validProperty(post, 'author') &&
+               validProperty(post, 'hashTags') &&
+               validProperty(post, 'likes');
     }
 
     add(post) {
@@ -94,7 +94,7 @@ class PostsList {
 
     static _validateEditPost(post) {
         for(let property in post) {
-            if (property === "id" || property === "createdAt" || property === "author" || property === "likes") {
+            if (property === 'id' || property === 'createdAt' || property === 'author' || property === 'likes') {
                 return false;
             }
             else if (!PostsList._validate_property(post, property)) {
@@ -146,22 +146,22 @@ function* generatePosts(postsCount) {
         if (i % 2 === 0) {
             yield {
                 id: i.toString(),
-                description: "I'm post number " + i,
+                description: 'post number ' + i,
                 createdAt: new Date(date.getTime() + i * 10000),
-                author: "Sasha" + i,
-                hashTags: ["js" + i, "task6"],
-                likes: ["Misha", "Alex", "Mike"]
+                author: 'Sasha' + i,
+                hashTags: ['js' + i, 'task6'],
+                likes: ['Misha', 'Alex', 'Mike']
             };
         }
         else {
             yield {
                 id: i.toString(),
-                description: "I'm post number " + i,
+                description: 'post number ' + i,
                 createdAt: new Date(date.getTime() - i * 10000),
-                author: "Alex",
-                photoLink: "images/forest_image.png",
-                hashTags: ["js", "task6"],
-                likes: ["Sasha"]
+                author: 'Alex',
+                photoLink: 'images/forest_image.png',
+                hashTags: ['js', 'task6'],
+                likes: ['Sasha']
             };
         }
     }
@@ -173,8 +173,9 @@ class PostDiv {
     } 
 
     getPostDiv() {
-        let post = document.createElement("div");
-        post.className = "test-post";
+        let post = document.createElement('div');
+
+        post.className = 'test-post';
 
         post.append(this._getPostHeader());
         post.append(this._getPostDescription());
@@ -184,28 +185,28 @@ class PostDiv {
     }
 
     _getPostHeader() {
-        let postHeader = document.createElement("div");
-        postHeader.className = "post-header";
+        let postHeader = document.createElement('div');
 
-        postHeader.innerHTML = "<h3>" + this._post.author + ", " + this._post.createdAt.toLocaleString() + "</h3>";
-        postHeader.innerHTML += "<i>" + this._post.hashTags.map(post => {
-            return "#" + post;
-        }); + "</i>";
+        postHeader.className = 'post-header';
+        postHeader.innerHTML = '<h3>' + this._post.author + ', ' + this._post.createdAt.toLocaleString() + '</h3>';
+        postHeader.innerHTML += '<i>' + this._post.hashTags.map(post => {
+            return '#' + post;
+        }); + '</i>';
 
         return postHeader;
     }
 
     _getPostDescription() {
-        let postDescription = document.createElement("div");
-        postDescription.className = "post-description";
+        let postDescription = document.createElement('div');
 
-        postDescription.innerHTML = "<p>" + this._post.description + "</p>";
+        postDescription.className = 'post-description';
+        postDescription.innerHTML = '<p>' + this._post.description + '</p>';
 
-        if (this._post.hasOwnProperty("photoLink")) {
-            let postDescriptionImage = document.createElement("img");
-            postDescriptionImage.className = "post-image";
-            postDescriptionImage.setAttribute("src", this._post.photoLink);
+        if (this._post.hasOwnProperty('photoLink')) {
+            let postDescriptionImage = document.createElement('img');
 
+            postDescriptionImage.className = 'post-image';
+            postDescriptionImage.setAttribute('src', this._post.photoLink);
 
             postDescription.append(postDescriptionImage);
         }
@@ -214,32 +215,33 @@ class PostDiv {
     }
 
     _getPostFooter() {
-        let postFooter = document.createElement("div");
-        postFooter.className = "post-footer";
+        let postFooter = document.createElement('div');
+        let likesDisplay = document.createElement('span');
+        let likesCount = document.createElement('span');
+        let postButtons = document.createElement('div');
+        let editButton = document.createElement('button');
+        let deleteButton = document.createElement('button');
 
-        let likesDisplay = document.createElement("span");
-        likesDisplay.className = "likes-display";
-
+        
+        postFooter.className = 'post-footer';
+        
+        likesDisplay.className = 'likes-display';
         likesDisplay.innerHTML = '<img class="post-like" src="images/like_image.png">';
-
-        let likesCount = document.createElement("span");
-        likesCount.className = "likes-count";
+    
+        likesCount.className = 'likes-count';
         likesCount.textContent = this._post.likes.length;
 
         likesDisplay.append(likesCount);
 
         postFooter.append(likesDisplay);
         
-        let postButtons = document.createElement("div");
-        postButtons.className = "post-actions-buttons";
+        postButtons.className = 'post-actions-buttons';
 
-        let editButton = document.createElement("button");
-        editButton.className = "action-button";
-        editButton.textContent = "Edit";
+        editButton.className = 'action-button';
+        editButton.textContent = 'Edit';
 
-        let deleteButton = document.createElement("button");
-        deleteButton.className = "action-button";
-        deleteButton.textContent = "Delete";
+        deleteButton.className = 'action-button';
+        deleteButton.textContent = 'Delete';
 
         postButtons.append(editButton);
         postButtons.append(deleteButton);
@@ -254,7 +256,7 @@ testPosts = new PostsList([...generatePosts(20)]);
 class View {
     constructor() {
         this._is_authorized = true;
-        this._posts = document.querySelector(".posts");
+        this._posts = document.querySelector('.posts');
         this._postsList = testPosts;
     }
 
@@ -262,7 +264,7 @@ class View {
         this._authorizedUserDisplay();
         this._authorizedAddDisplay();
 
-        this._posts.innerHTML = "";
+        this._posts.innerHTML = '';
 
         this._postsList.getPage().forEach(post => {
             this._posts.append((new PostDiv(post)).getPostDiv());
@@ -273,30 +275,29 @@ class View {
 
     _authorizedUserDisplay() {
         if (!this._is_authorized) {
-            document.querySelector(".log-out").style.visibility = "hidden";
-            document.querySelector(".user-info").style.visibility = "hidden";
+            document.querySelector('.log-out').style.visibility = 'hidden';
+            document.querySelector('.user-info').style.visibility = 'hidden';
         }
     }
 
     _authorizedPostDisplay() {
        if (!this._is_authorized) {
-           let actionButtons = document.querySelectorAll(".post-actions-buttons");
+           let actionButtons = document.querySelectorAll('.post-actions-buttons');
            actionButtons.forEach(element => {
-               element.style.visibility = "hidden";
+               element.style.visibility = 'hidden';
            });
        }
     }
 
     _authorizedAddDisplay() {
         if (!this._is_authorized) {
-            document.querySelector(".add-button").style.visibility = "hidden";
+            document.querySelector('.add-button').style.visibility = 'hidden';
         }
     }
 }
 
 let view = new View();
 view.refreshPage();
-
 
 function addPost(post) {
     if (view._postsList.add(post)) {
