@@ -20,35 +20,36 @@
         </header>
 
         <div class="content">
-            <div class="filters">
+            <form name="filtersForm" class="filters">
                 <h1>Filters</h1>
     
                 <div class="filter">
                     <p>Name</p>
-                    <input type="text" placeholder="Name">
+                    <input name="nameInput" type="text" placeholder="Name">
                 </div>
     
                 <div class="filter">
                     <p>Date</p>
                     
-                    <input type="date">
-                    <input type="date">
+                    <input name="startDateInput" type="date">
+                    <input name="endDateInput" type="date">
 
                 </div>
     
                 <div class="filter">
                     <p>Hashtags</p>
-                    <input type="text" placeholder="Tags">
+                    <input name="hashTagsInput" type="text" placeholder="Tags">
                 </div>
     
-                <button class="apply-filters">apply</button>
-            </div>
+                <input type="submit" class="apply-filters" value="apply">
+            </form>
     
             <div class="news-seed">
                 <button class="add-button">Add post</button>
     
                 <div class="posts">
-                    <script src="postsClass/PostsList.js"></script>
+                    <script src="js/PostsList.js"></script>
+                    <script src="js/controller.js"></script>
                 </div>
                 
                 <button class="more-button">Load more</button>

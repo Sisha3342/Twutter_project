@@ -8,13 +8,21 @@ class PostsList {
 
         if (filterConfig) {
             for(let property in filterConfig) {
-                if (property === 'hashTags') {
-                    for(let i = 0; i < filterConfig.hashTags.length; i++) {
-                        postsToReturn = postsToReturn.filter(post => post.hashTags.includes(filterConfig.hashTags[i]))
-                    }
-                }
-                else {
-                    postsToReturn = postsToReturn.filter(post => post[property] === filterConfig[property]);
+                switch (property) {
+                    case "hashTags":
+                        for(let i = 0; i < filterConfig.hashTags.length; i++) {
+                            postsToReturn = postsToReturn.filter(post => post.hashTags.includes(filterConfig.hashTags[i]));
+                        }
+                        break;
+                    case "startDate":
+                        postsToReturn = postsToReturn.filter(post => post.createdAt >= filterConfig.startDate);
+                        break;
+                    case "endDate":
+                        postsToReturn = postsToReturn.filter(post => post.createdAt <= filterConfig.endDate);
+                        break;
+                    default:
+                        postsToReturn = postsToReturn.filter(post => post[property] === filterConfig[property]);
+                        break;
                 }
             }
         }
@@ -31,7 +39,7 @@ class PostsList {
             }
         });
 
-        return postsToReturn.slice(skip, skip + top);
+        return new PostsList(postsToReturn.slice(skip, skip + top));
     }
 
     get(id) {
@@ -147,7 +155,7 @@ function* generatePosts(postsCount) {
             yield {
                 id: i.toString(),
                 description: 'post number ' + i,
-                createdAt: new Date(date.getTime() + i * 10000),
+                createdAt: new Date(date.getTime() + i * 100000000),
                 author: 'Sasha' + i,
                 hashTags: ['js' + i, 'task6'],
                 likes: ['Misha', 'Alex', 'Mike']
@@ -157,7 +165,7 @@ function* generatePosts(postsCount) {
             yield {
                 id: i.toString(),
                 description: 'post number ' + i,
-                createdAt: new Date(date.getTime() - i * 10000),
+                createdAt: new Date(date.getTime() - i * 100000000),
                 author: 'Alex',
                 photoLink: 'images/forest_image.png',
                 hashTags: ['js', 'task6'],
@@ -266,7 +274,7 @@ class View {
 
         this._posts.innerHTML = '';
 
-        this._postsList.getPage().forEach(post => {
+        this._postsList.getPage()._posts.forEach(post => {
             this._posts.append((new PostDiv(post)).getPostDiv());
         });
 

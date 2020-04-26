@@ -46,7 +46,7 @@ img.user-icon {
     padding: 0.5%;
 }
 
-.filters {
+form.filters {
     vertical-align: top;
     display: inline-block;
     margin: 0.5% 0.5% 1% 0.1%;
@@ -62,7 +62,7 @@ img.user-icon {
     font-style: italic;
 }
 
-button.apply-filters {
+input.apply-filters {
     width: 70px;
     font-size: 15px;
     font-weight: bolder;
@@ -164,7 +164,7 @@ footer {
 }
 
 @media only screen and (max-width: 1535px) {
-    .filters {
+    form.filters {
         width: 50%;
         margin: 0.5% auto;
         display: block;
@@ -191,11 +191,11 @@ footer {
         margin: 1%;
     }
 
-    .filters {
+    form.filters {
         font-size: 10px;
     }
 
-    .filters > button.apply-filters {
+    form.filters > button.apply-filters {
         font-size: 12px;
     }
 
