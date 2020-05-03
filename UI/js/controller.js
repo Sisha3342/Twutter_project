@@ -52,7 +52,7 @@ class Controller {
         view.displayPage('mainPage');
     }
 
-    static addPostHandler() {
+    static addPostHandler(event) {
         event.preventDefault();
 
         let addedPost = document.forms.addPostForm.elements; 
@@ -69,9 +69,45 @@ class Controller {
             post.photoLink = addedPost.postImageInput.value;
         }
 
-        console.log(testPosts.add(post));
+        testPosts.add(post);
+        testPostsDiv.push((new PostDiv(post)).getPostDiv());
 
         view.displayPage('mainPage');
+    }
+
+    static PostActionHandler(event) {
+        let target = event.target;
+
+        switch (target.className) {
+            case 'action-button':
+                if (target.textContent === 'Delete') {
+                    Controller.deletePostHandler(target.closest('.test-post'));
+                }
+                else {
+                    Controller.editPostHandler(target.closest('.test-post'));
+                }
+                break;
+            case 'post-like':
+                break;
+            default:
+                break;
+        }
+    }
+
+    static deletePostHandler(post) {
+        if (confirm('Delete this post?')) {
+            let postIndex = getPostIndex(post);
+
+            testPosts.remove(postIndex.toString());
+            testPostsDiv.splice(postIndex, 1);
+            
+            View._setPostsDisplay(view);
+            view.refreshPage();
+        }
+    }
+
+    static editPostHandler() {
+
     }
 
     static setMainHandlers() {
@@ -79,6 +115,7 @@ class Controller {
         document.querySelector('form.filters').addEventListener('submit', Controller.submitFiltersHandler);
         document.querySelector('button.more-button').addEventListener('click', Controller.loadMoreTweetsHandler);
         document.querySelector('button.add-button').addEventListener('click', Controller.addHandler);
+        document.querySelector('.posts').addEventListener('click', Controller.PostActionHandler);
     }
 
     static setAddPostHandlers() {

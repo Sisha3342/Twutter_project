@@ -185,7 +185,7 @@ function* generatePosts(postsCount) {
 class PostDiv {
     constructor(post) {
         this._post = post;
-    } 
+    }
 
     getPostDiv() {
         let post = document.createElement('div');
@@ -204,8 +204,8 @@ class PostDiv {
 
         postHeader.className = 'post-header';
         postHeader.innerHTML = '<h3>' + this._post.author + '</h3>' + '<h4>' + this._post.createdAt.toLocaleString() + '</h4>';
-        postHeader.innerHTML += '<i>' + this._post.hashTags.map(post => {
-            return '#' + post;
+        postHeader.innerHTML += '<i>' + this._post.hashTags.map(tag => {
+            return '#' + tag;
         }); + '</i>';
 
         return postHeader;
@@ -269,14 +269,32 @@ class PostDiv {
 
 testPosts = new PostsList([...generatePosts(40)]);
 
+testPostsDiv = testPosts._posts.map(function(post) {
+    return (new PostDiv(post)).getPostDiv();
+});
+
+function getPostIndex(post) {
+    return testPostsDiv.findIndex(function(currentPost) {
+        return post.querySelector('h3').textContent === currentPost.querySelector('h3').textContent &&
+               post.querySelector('h4').textContent === currentPost.querySelector('h4').textContent &&
+               post.querySelector('.post-description').textContent ===
+               currentPost.querySelector('.post-description').textContent;
+    });
+}
+
+
 class View {
     constructor() {
         this._currentUser = 'Sasha';
-        this._posts = null;
-        this._postsList = testPosts;
-        this._postsToShowCount = 10;
+        View._setPostsDisplay(this);
 
         this.displayPage('mainPage');
+    }
+
+    static _setPostsDisplay(pageView) {
+        pageView._postsToShowCount = 10;
+        pageView._postsList = testPosts;
+        pageView._posts = document.querySelector('.posts');
     }
 
     setPostsToShowCount(count) {
@@ -320,7 +338,7 @@ class View {
      }
 
     _authorizedAddDisplay() {
-        if (this._currentUser !== '') {
+        if (this._currentUser === '') {
             document.querySelector('.add-button').style.visibility = 'hidden';
         }
     }
@@ -391,9 +409,7 @@ class View {
 
         document.querySelector('header').after(content);
         
-        pageView._postsToShowCount = 10;
-        pageView._postsList = testPosts;
-        pageView._posts = document.querySelector('.posts');
+        View._setPostsDisplay(pageView);
         pageView.refreshPage();
 
         Controller.setMainHandlers();
@@ -439,7 +455,7 @@ class View {
 
     
     static _showEditPostPage(visibility) {
-        
+
     }
 
     
@@ -450,29 +466,4 @@ class View {
 
 let view = new View();
 
-// function addPost(post) {
-//     if (view._postsList.add(post)) {
-//         view.refreshPage();
-//         return true;
-//     }
-
-//     return false;
-// }
-
-// function removePost(id) {
-//     if (view._postsList.remove(id)) {
-//         view.refreshPage();
-//         return true;
-//     }
-
-//     return false;
-// }
-
-// function editPost(id, post) {
-//     if (view._postsList.edit(id, post)) {
-//         refreshPage();
-//         return true;
-//     }
-
-//     return false;
-// }
+// console.log(view._testPostsDiv[10])
