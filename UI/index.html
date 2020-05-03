@@ -19,43 +19,22 @@
             <button class="log-out">Log out</button>
         </header>
 
-        <div class="content">
-            <form name="filtersForm" class="filters">
-                <h1>Filters</h1>
-    
-                <div class="filter">
-                    <p>Name</p>
-                    <input name="nameInput" type="text" placeholder="Name">
-                </div>
-    
-                <div class="filter">
-                    <p>Date</p>
-                    
-                    <input name="startDateInput" type="date">
-                    <input name="endDateInput" type="date">
-
-                </div>
-    
-                <div class="filter">
-                    <p>Hashtags</p>
-                    <input name="hashTagsInput" type="text" placeholder="Tags">
-                </div>
-    
-                <input type="submit" class="apply-filters" value="apply">
-            </form>
-    
-            <div class="news-seed">
-                <button class="add-button">Add post</button>
-    
-                <div class="posts">
-                    <script src="js/PostsList.js"></script>
-                    <script src="js/controller.js"></script>
-                </div>
+        <div class="add-post">
+            <form>
+                <h2>HashTags (separated by ',')</h2>
+                <input name="postHashtagsInput" type="text" placeholder="tags">
                 
-                <button class="more-button">Load more</button>
-            </div>
-        </div>
+                <h2>Description</h2>
+                <textarea name="postDescriptionInput" rows="10"></textarea>
+                
+                <h2>Image</h2>
+                <input name="postImageInput" type="file" accept=".jpg, .jpeg, .png">
+            </form>
+            
 
+            <button class="add-post-button">Add post</button>
+        </div>
+        
         <footer>
             <h1 class="site-name">Twutter</h1>
 

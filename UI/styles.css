@@ -4,6 +4,33 @@ body {
     background-color: blanchedalmond;
 }
 
+textarea {
+    width: 50%;
+}
+
+input {
+    width: 30%;
+    height: 30px;
+    font-size: 20px;
+}
+
+.add-post {
+    margin: 4% 25%;
+    padding: 1%;
+    background-color: aqua;
+    width: 60%;
+    text-align: center;
+}
+
+button.add-post-button {
+    margin: 2.5%;
+    padding: 1%;
+    height: 40px;
+    width: 100px;
+    font-size: 17px;
+    cursor: pointer;
+}
+
 header {
     z-index: 1;
     position: sticky;
@@ -28,7 +55,6 @@ button.log-out {
     font-size: 18px;
     width: 80px;
     cursor: pointer;
-    visibility: visible;
 }
 
 .user-info {
@@ -151,6 +177,8 @@ footer {
     background-color: rgb(141, 203, 231);
     width: 100%;
     text-align: center;
+    /* position: fixed;
+    bottom: 0%; */
 }
 
 .creator-info {

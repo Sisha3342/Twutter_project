@@ -3,7 +3,7 @@ class PostsList {
         this._posts = posts.concat();
     }
 
-    getPage(skip=0, top=this._posts.length, filterConfig=undefined) {
+    getPage(skip=0, top=10, filterConfig=undefined) {
         let postsToReturn = this._posts.concat();
 
         if (filterConfig) {
@@ -19,6 +19,9 @@ class PostsList {
                         break;
                     case "endDate":
                         postsToReturn = postsToReturn.filter(post => post.createdAt <= filterConfig.endDate);
+                        break;
+                    case "author":
+                        postsToReturn = postsToReturn.filter(post => post["author"].includes(filterConfig["author"]));
                         break;
                     default:
                         postsToReturn = postsToReturn.filter(post => post[property] === filterConfig[property]);
@@ -145,6 +148,10 @@ class PostsList {
     clear() {
         this._posts = [];
     }
+
+    getLength() {
+        return this._posts.length;
+    }
 }
 
 function* generatePosts(postsCount) {
@@ -156,7 +163,7 @@ function* generatePosts(postsCount) {
                 id: i.toString(),
                 description: 'post number ' + i,
                 createdAt: new Date(date.getTime() + i * 100000000),
-                author: 'Sasha' + i,
+                author: 'Sasha',
                 hashTags: ['js' + i, 'task6'],
                 likes: ['Misha', 'Alex', 'Mike']
             };
@@ -259,13 +266,25 @@ class PostDiv {
     }
 }
 
-testPosts = new PostsList([...generatePosts(20)]);
+testPosts = new PostsList([...generatePosts(40)]);
 
 class View {
     constructor() {
         this._is_authorized = true;
         this._posts = document.querySelector('.posts');
         this._postsList = testPosts;
+        this._postsToShowCount = 10;
+    }
+
+    setPostsToShowCount(count) {
+        this._postsToShowCount = count;
+        this.refreshPage();
+    }
+
+    setPostsList(postsList) {
+        this._postsList = postsList;
+        this._postsToShowCount = 10;
+        this.refreshPage();
     }
 
     refreshPage() {
@@ -274,7 +293,7 @@ class View {
 
         this._posts.innerHTML = '';
 
-        this._postsList.getPage()._posts.forEach(post => {
+        this._postsList.getPage(undefined, this._postsToShowCount)._posts.forEach(post => {
             this._posts.append((new PostDiv(post)).getPostDiv());
         });
 
@@ -302,6 +321,89 @@ class View {
             document.querySelector('.add-button').style.visibility = 'hidden';
         }
     }
+
+    displayPage(page) {
+        let pageHandlers = {addPostPage: this._showAddPostPage,
+                            editPostPage: this._showEditPostPage,
+                            mainPage: this._showMainPage,
+                            authPage: this._showAuthPage};
+
+        for (let handler in pageHandlers) {
+            if (handler === page) {
+                pageHandlers[handler]('visible');
+            }
+            else {
+                pageHandlers[handler]('hidden');
+            }
+        }
+    }
+
+    _showMainPage(visibility) {
+        if (visibility === 'hidden') {
+            document.querySelector('.content').remove();
+            return ;
+        }
+
+        let content = document.createElement('div');
+        content.className = 'content';
+        
+        content.innerHTML = `
+        <form name="filtersForm" class="filters">
+            <h1>Filters</h1>
+
+            <div class="filter">
+                <p>Name</p>
+                <input name="nameInput" type="text" placeholder="Name">
+            </div>
+
+            <div class="filter">
+                <p>Date</p>
+                
+                <input name="startDateInput" type="date">
+                <input name="endDateInput" type="date">
+
+            </div>
+
+            <div class="filter">
+                <p>Hashtags</p>
+                <input name="hashTagsInput" type="text" placeholder="Tags">
+            </div>
+
+            <input type="submit" class="apply-filters" value="apply">
+        </form>
+
+        <div class="news-seed">
+            <button class="add-button">Add post</button>
+
+            <div class="posts">
+                <script src="js/PostsList.js"></script>
+            </div>
+            
+            <button class="more-button">Load more</button>
+
+            <script src="js/controller.js"></script>
+        </div>
+        `
+
+        document.querySelector('.header').after(content);
+    }
+
+    
+    _showAddPostPage(visibility) {
+        if (visibility == hidden) {
+            return ;
+        }
+    }
+
+    
+    _showEditPostPage(visibility) {
+        
+    }
+
+    
+    _showAuthPage(visibility) {
+        
+    }
 }
 
 let view = new View();
@@ -315,6 +417,8 @@ function addPost(post) {
 
     return false;
 }
+
+
 
 function removePost(id) {
     if (view._postsList.remove(id)) {
