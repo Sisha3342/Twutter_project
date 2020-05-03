@@ -44,12 +44,45 @@ class Controller {
         }
     }
 
-    static addPostHandler() {
+    static addHandler(event) {
         view.displayPage('addPostPage');
     }
-}
 
-document.addEventListener('DOMContentLoaded', function() {document.forms.filtersForm.reset();})
-document.querySelector('form.filters').addEventListener('submit', Controller.submitFiltersHandler);
-document.querySelector('button.more-button').addEventListener('click', Controller.loadMoreTweetsHandler);
-document.querySelector('button.add-button').addEventListener('click', Controller.addPostHandler)
+    static backHandler() {
+        view.displayPage('mainPage');
+    }
+
+    static addPostHandler() {
+        event.preventDefault();
+
+        let addedPost = document.forms.addPostForm.elements; 
+        let post = {};
+
+        post.id = testPosts.getLength().toString();
+        post.author = view._currentUser;
+        post.createdAt = new Date();
+        post.likes = [];
+        post.hashTags = addedPost.postHashtagsInput.value.split(',');
+        post.description = addedPost.postDescriptionInput.value;
+
+        if (addedPost.postImageInput.value !== '') {
+            post.photoLink = addedPost.postImageInput.value;
+        }
+
+        console.log(testPosts.add(post));
+
+        view.displayPage('mainPage');
+    }
+
+    static setMainHandlers() {
+        document.addEventListener('DOMContentLoaded', function() {document.forms.filtersForm.reset();})
+        document.querySelector('form.filters').addEventListener('submit', Controller.submitFiltersHandler);
+        document.querySelector('button.more-button').addEventListener('click', Controller.loadMoreTweetsHandler);
+        document.querySelector('button.add-button').addEventListener('click', Controller.addHandler);
+    }
+
+    static setAddPostHandlers() {
+        document.querySelector('button.back-button').addEventListener('click', Controller.backHandler);
+        document.querySelector('button.add-post-button').addEventListener('click', Controller.addPostHandler);
+    }
+}

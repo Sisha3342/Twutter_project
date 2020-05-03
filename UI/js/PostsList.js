@@ -62,7 +62,7 @@ class PostsList {
             case 'hashTags':
                 return post.hashTags && post.hashTags.every(tag => typeof tag === 'string');
             case 'likes':
-                return post.hashTags && post.likes.every(tag => typeof tag === 'string');
+                return post.likes && post.likes.every(tag => typeof tag === 'string');
             case 'photoLink':
                 return typeof post.photoLink === 'string';
             default:
@@ -183,7 +183,7 @@ function* generatePosts(postsCount) {
 }
 
 class PostDiv {
-    constructor(post, isAuthorized) {
+    constructor(post) {
         this._post = post;
     } 
 
@@ -203,7 +203,7 @@ class PostDiv {
         let postHeader = document.createElement('div');
 
         postHeader.className = 'post-header';
-        postHeader.innerHTML = '<h3>' + this._post.author + ', ' + this._post.createdAt.toLocaleString() + '</h3>';
+        postHeader.innerHTML = '<h3>' + this._post.author + '</h3>' + '<h4>' + this._post.createdAt.toLocaleString() + '</h4>';
         postHeader.innerHTML += '<i>' + this._post.hashTags.map(post => {
             return '#' + post;
         }); + '</i>';
@@ -251,6 +251,7 @@ class PostDiv {
         postFooter.append(likesDisplay);
         
         postButtons.className = 'post-actions-buttons';
+        postButtons.style.visibility = 'hidden';
 
         editButton.className = 'action-button';
         editButton.textContent = 'Edit';
@@ -270,10 +271,12 @@ testPosts = new PostsList([...generatePosts(40)]);
 
 class View {
     constructor() {
-        this._is_authorized = true;
-        this._posts = document.querySelector('.posts');
+        this._currentUser = 'Sasha';
+        this._posts = null;
         this._postsList = testPosts;
         this._postsToShowCount = 10;
+
+        this.displayPage('mainPage');
     }
 
     setPostsToShowCount(count) {
@@ -283,14 +286,12 @@ class View {
 
     setPostsList(postsList) {
         this._postsList = postsList;
-        this._postsToShowCount = 10;
         this.refreshPage();
     }
 
     refreshPage() {
         this._authorizedUserDisplay();
         this._authorizedAddDisplay();
-
         this._posts.innerHTML = '';
 
         this._postsList.getPage(undefined, this._postsToShowCount)._posts.forEach(post => {
@@ -301,46 +302,52 @@ class View {
     }
 
     _authorizedUserDisplay() {
-        if (!this._is_authorized) {
+        if (this._currentUser === '') {
             document.querySelector('.log-out').style.visibility = 'hidden';
             document.querySelector('.user-info').style.visibility = 'hidden';
         }
     }
 
     _authorizedPostDisplay() {
-       if (!this._is_authorized) {
-           let actionButtons = document.querySelectorAll('.post-actions-buttons');
-           actionButtons.forEach(element => {
-               element.style.visibility = 'hidden';
-           });
-       }
-    }
+        if (this._currentUser !== '') {
+            let posts = document.querySelectorAll('.test-post');
+            posts.forEach(post => {
+                if (this._currentUser === post.querySelector('h3').textContent) {
+                    post.querySelector('.post-actions-buttons').style.visibility = 'visible';
+                }   
+            });
+        }
+     }
 
     _authorizedAddDisplay() {
-        if (!this._is_authorized) {
+        if (this._currentUser !== '') {
             document.querySelector('.add-button').style.visibility = 'hidden';
         }
     }
 
     displayPage(page) {
-        let pageHandlers = {addPostPage: this._showAddPostPage,
-                            editPostPage: this._showEditPostPage,
-                            mainPage: this._showMainPage,
-                            authPage: this._showAuthPage};
-
+        let pageHandlers = {addPostPage: View._showAddPostPage,
+                            editPostPage: View._showEditPostPage,
+                            mainPage: View._showMainPage,
+                            authPage: View._showAuthPage};
         for (let handler in pageHandlers) {
             if (handler === page) {
-                pageHandlers[handler]('visible');
+                pageHandlers[handler](this, 'visible');
             }
             else {
-                pageHandlers[handler]('hidden');
+                pageHandlers[handler](this, 'hidden');
             }
         }
     }
 
-    _showMainPage(visibility) {
+    static _showMainPage(pageView, visibility) {
         if (visibility === 'hidden') {
-            document.querySelector('.content').remove();
+            let content = document.querySelector('.content')
+
+            if (content) {
+                content.remove();
+            }
+
             return ;
         }
 
@@ -376,64 +383,96 @@ class View {
             <button class="add-button">Add post</button>
 
             <div class="posts">
-                <script src="js/PostsList.js"></script>
             </div>
             
             <button class="more-button">Load more</button>
-
-            <script src="js/controller.js"></script>
         </div>
         `
 
-        document.querySelector('.header').after(content);
+        document.querySelector('header').after(content);
+        
+        pageView._postsToShowCount = 10;
+        pageView._postsList = testPosts;
+        pageView._posts = document.querySelector('.posts');
+        pageView.refreshPage();
+
+        Controller.setMainHandlers();
     }
 
     
-    _showAddPostPage(visibility) {
-        if (visibility == hidden) {
+    static _showAddPostPage(pageView, visibility) {
+        if (visibility === 'hidden') {
+            let addPost = document.querySelector('.add-post')
+
+            if (addPost) {
+                addPost.remove();
+            }
+
             return ;
         }
+
+        let addForm = document.createElement('div');
+        addForm.className = 'add-post';
+
+        addForm.innerHTML = `
+        <div class="add-post">
+            <form name="addPostForm">
+                <h2>HashTags (separated by ',')</h2>
+                <input name="postHashtagsInput" type="text" placeholder="tags">
+                
+                <h2>Description</h2>
+                <textarea name="postDescriptionInput" rows="10"></textarea>
+                
+                <h2>Image</h2>
+                <input name="postImageInput" type="file" accept=".jpg, .jpeg, .png">
+            </form>
+            
+
+            <button class="add-post-button">Add post</button>
+            <button class="back-button">Back</button>
+        </div>
+        `
+
+        document.querySelector('header').after(addForm);
+        Controller.setAddPostHandlers();
     }
 
     
-    _showEditPostPage(visibility) {
+    static _showEditPostPage(visibility) {
         
     }
 
     
-    _showAuthPage(visibility) {
+    static _showAuthPage(visibility) {
         
     }
 }
 
 let view = new View();
-view.refreshPage();
 
-function addPost(post) {
-    if (view._postsList.add(post)) {
-        view.refreshPage();
-        return true;
-    }
+// function addPost(post) {
+//     if (view._postsList.add(post)) {
+//         view.refreshPage();
+//         return true;
+//     }
 
-    return false;
-}
+//     return false;
+// }
 
+// function removePost(id) {
+//     if (view._postsList.remove(id)) {
+//         view.refreshPage();
+//         return true;
+//     }
 
+//     return false;
+// }
 
-function removePost(id) {
-    if (view._postsList.remove(id)) {
-        view.refreshPage();
-        return true;
-    }
+// function editPost(id, post) {
+//     if (view._postsList.edit(id, post)) {
+//         refreshPage();
+//         return true;
+//     }
 
-    return false;
-}
-
-function editPost(id, post) {
-    if (view._postsList.edit(id, post)) {
-        refreshPage();
-        return true;
-    }
-
-    return false;
-}
+//     return false;
+// }
