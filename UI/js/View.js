@@ -141,7 +141,7 @@ class View {
             
             <button class="more-button">Load more</button>
         </div>
-        `
+        `;
 
         document.querySelector('header').after(content);
         
@@ -180,7 +180,7 @@ class View {
             
             <button class="add-post-button">Add post</button>
             <button class="back-button">Back</button>
-        `
+        `;
 
         document.querySelector('header').after(addForm);
         Controller.setAddPostHandlers();
@@ -215,7 +215,7 @@ class View {
 
         <button class="edit-post-button">Edit post</button>
         <button class="back-button">Back</button>
-        `
+        `;
 
         document.querySelector('header').after(editForm);
     }
@@ -258,5 +258,3 @@ class View {
 }
 
 let view = new View();
-
-// console.log(view._testPostsDiv[10])

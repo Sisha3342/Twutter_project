@@ -9,7 +9,7 @@ class PostsList {
         let postsToReturn = this._posts.concat();
 
         if (filterConfig) {
-            for(let property in filterConfig) {
+            for (let property in filterConfig) {
                 switch (property) {
                     case "hashTags":
                         for(let i = 0; i < filterConfig.hashTags.length; i++) {
@@ -106,7 +106,7 @@ class PostsList {
     }
 
     static _validateEditPost(post) {
-        for(let property in post) {
+        for (let property in post) {
             if (property === 'id' || property === 'createdAt' || property === 'author' || property === 'likes') {
                 return false;
             }
@@ -125,7 +125,7 @@ class PostsList {
 
         let postToEdit = this.get(id);
 
-        for(let property in post) {
+        for (let property in post) {
             postToEdit[property] = post[property];
         }
 
@@ -157,22 +157,9 @@ class PostsList {
 
     saveToLocalStorage() {
         localStorage.setItem('posts', JSON.stringify(this));
-
-        // for (let i = 0; i < this.getLength(); i++) {
-        //     localStorage.setItem('post' + i, JSON.stringify(this._posts[i]));
-        // }
     }
 
     static restoreFromLocalStorage() {
-        // let posts = [];
-        
-        // for (let key in localStorage) {
-        //     if (localStorage.hasOwnProperty(key)) {
-        //         posts.push(JSON.parse(localStorage.getItem(key)));
-        //         console.log(localStorage.getItem(key).likes);
-        //     }
-        // }
-
         return new PostsList(JSON.parse(localStorage.getItem('posts'))._posts);
     }
 }
@@ -180,7 +167,7 @@ class PostsList {
 function* generatePosts(postsCount) {
     let date = new Date;
 
-    for(let i = 0; i < postsCount; i++) {
+    for (let i = 0; i < postsCount; i++) {
         if (i % 2 === 0) {
             yield {
                 id: i.toString(),
