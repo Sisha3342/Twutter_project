@@ -44,7 +44,7 @@ class Controller {
         }
     }
 
-    static addHandler(event) {
+    static addHandler() {
         view.displayPage('addPostPage');
     }
 
@@ -55,7 +55,7 @@ class Controller {
     static addPostHandler(event) {
         event.preventDefault();
 
-        let addedPost = document.forms.addPostForm.elements; 
+        let addedPost = document.forms.postForm.elements; 
         let post = {};
 
         post.id = testPosts.getLength().toString();
@@ -77,14 +77,16 @@ class Controller {
 
     static PostActionHandler(event) {
         let target = event.target;
-
+        
         switch (target.className) {
             case 'action-button':
+                let post = target.closest('.test-post');
+
                 if (target.textContent === 'Delete') {
-                    Controller.deletePostHandler(target.closest('.test-post'));
+                    Controller.deletePostHandler(post);
                 }
                 else {
-                    Controller.editPostHandler(target.closest('.test-post'));
+                    Controller.processEditPostPage(post);
                 }
                 break;
             case 'post-like':
@@ -106,8 +108,42 @@ class Controller {
         }
     }
 
-    static editPostHandler() {
+    static processEditPostPage(post) {
+        view.displayPage('editPostPage');
+        let postFormElements = document.forms.postForm.elements; 
+        let postInstance = testPosts.get(getPostIndex(post).toString());
 
+        console.log(postInstance);
+
+        postFormElements.postHashtagsInput.value = postInstance.hashTags.join(',');
+        postFormElements.postDescriptionInput.value = postInstance.description;
+        postFormElements.postHashtagsInput.value = postInstance.hashTags.join(',');
+
+        if (postInstance.hasOwnProperty('photoLink')) {
+            postFormElements.postImageInput.value = postInstance.photoLink;
+        }
+
+
+        function editPostHandler(event) {
+            event.preventDefault();
+
+            let editedPost = {};
+
+            editedPost.hashTags = postFormElements.postHashtagsInput.value.split(',');
+            editedPost.description = postFormElements.postDescriptionInput.value;
+
+            if (postFormElements.postImageInput.value !== '') {
+                editedPost.photoLink = post.postImageInput.value;
+            }
+
+            testPosts.edit(getPostIndex(post).toString(), editedPost);
+            testPostsDiv[getPostIndex(post)] = ((new PostDiv(testPosts.get(getPostIndex(post).toString()))).getPostDiv());
+
+            view.displayPage('mainPage');
+        }
+
+        document.querySelector('button.back-button').addEventListener('click', Controller.backHandler);
+        document.querySelector('button.edit-post-button').addEventListener('click', editPostHandler);
     }
 
     static setMainHandlers() {

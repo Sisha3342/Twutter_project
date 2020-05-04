@@ -431,8 +431,7 @@ class View {
         addForm.className = 'add-post';
 
         addForm.innerHTML = `
-        <div class="add-post">
-            <form name="addPostForm">
+            <form name="postForm">
                 <h2>HashTags (separated by ',')</h2>
                 <input name="postHashtagsInput" type="text" placeholder="tags">
                 
@@ -443,10 +442,8 @@ class View {
                 <input name="postImageInput" type="file" accept=".jpg, .jpeg, .png">
             </form>
             
-
             <button class="add-post-button">Add post</button>
             <button class="back-button">Back</button>
-        </div>
         `
 
         document.querySelector('header').after(addForm);
@@ -454,8 +451,37 @@ class View {
     }
 
     
-    static _showEditPostPage(visibility) {
+    static _showEditPostPage(pageView, visibility) {
+        if (visibility === 'hidden') {
+            let editPost = document.querySelector('.edit-post')
 
+            if (editPost) {
+                editPost.remove();
+            }
+
+            return ;
+        }
+
+        let editForm = document.createElement('div');
+        editForm.className = 'edit-post';
+
+        editForm.innerHTML = `
+        <form name="postForm">
+            <h2>HashTags (separated by ',')</h2>
+            <input name="postHashtagsInput" type="text" placeholder="tags">
+            
+            <h2>Description</h2>
+            <textarea name="postDescriptionInput" rows="10"></textarea>
+            
+            <h2>Image</h2>
+            <input name="postImageInput" type="file" accept=".jpg, .jpeg, .png">
+        </form>
+
+        <button class="edit-post-button">Edit post</button>
+        <button class="back-button">Back</button>
+        `
+
+        document.querySelector('header').after(editForm);
     }
 
     

@@ -22,7 +22,24 @@ input {
     text-align: center;
 }
 
+.edit-post {
+    margin: 1% 15%;
+    padding: 1%;
+    background-color: aqua;
+    width: 70%;
+    text-align: center;
+}
+
 button.add-post-button {
+    margin: 2.5%;
+    padding: 1%;
+    height: 40px;
+    width: 100px;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+button.edit-post-button {
     margin: 2.5%;
     padding: 1%;
     height: 40px;
