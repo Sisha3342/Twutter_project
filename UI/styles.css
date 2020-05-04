@@ -30,6 +30,18 @@ input {
     text-align: center;
 }
 
+.user-form {
+    margin: 1% 15%;
+    padding: 1%;
+    background-color: aqua;
+    width: 70%;
+    text-align: center;
+}
+
+.user-info > h2 {
+    display: inline;
+}
+
 button.add-post-button {
     margin: 2.5%;
     padding: 1%;
@@ -75,7 +87,7 @@ h1.site-name {
     cursor: default;
 }
 
-button.log-out {
+button.log-in-out {
     float: right;
     margin: 0.5% 5% 0.5% 2.5%;
     font-size: 18px;
@@ -84,13 +96,8 @@ button.log-out {
 }
 
 .user-info {
-    margin: 0.5% 2.5% 0.5% 10%;
+    margin: 0.5% 2.5% 0.5% 5%;
     float: left;
-}
-
-img.user-icon {
-    width: 20px;
-    cursor: pointer;
 }
 
 .content {
@@ -171,6 +178,7 @@ img.post-image {
 img.post-like {
     width: 20px; 
     margin: 1px;
+    cursor: pointer;
 }
 
 .likes-count {
@@ -203,8 +211,6 @@ footer {
     background-color: rgb(141, 203, 231);
     width: 100%;
     text-align: center;
-    /* position: fixed;
-    bottom: 0%; */
 }
 
 .creator-info {

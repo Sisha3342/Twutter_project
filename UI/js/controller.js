@@ -75,13 +75,16 @@ class Controller {
         view.displayPage('mainPage');
     }
 
-    static PostActionHandler(event) {
+    static postActionHandler(event) {
+        if (view._currentUser === '') {
+            return ;
+        }
+
         let target = event.target;
-        
+        let post = target.closest('.test-post');
+
         switch (target.className) {
             case 'action-button':
-                let post = target.closest('.test-post');
-
                 if (target.textContent === 'Delete') {
                     Controller.deletePostHandler(post);
                 }
@@ -90,7 +93,7 @@ class Controller {
                 }
                 break;
             case 'post-like':
-                break;
+                Controller.likePostHandler(post);
             default:
                 break;
         }
@@ -103,8 +106,27 @@ class Controller {
             testPosts.remove(postIndex.toString());
             testPostsDiv.splice(postIndex, 1);
             
-            View._setPostsDisplay(view);
+            View.setPostsDisplay(view);
             view.refreshPage();
+        }
+    }
+
+    static likePostHandler(post) {
+        let postIndex = getPostIndex(post);
+        let postInstance = testPosts.get(postIndex.toString());
+        let userIndex = postInstance.likes.indexOf(view._currentUser);
+
+        if (userIndex !== -1) {
+            postInstance.likes.splice(userIndex, 1);
+
+            let likesCount = post.querySelector('.likes-count');
+            likesCount.textContent = +likesCount.textContent - 1 + '';
+        }
+        else {
+            postInstance.likes.push(view._currentUser);
+
+            let likesCount = post.querySelector('.likes-count');
+            likesCount.textContent = +likesCount.textContent + 1 + '';
         }
     }
 
@@ -113,16 +135,9 @@ class Controller {
         let postFormElements = document.forms.postForm.elements; 
         let postInstance = testPosts.get(getPostIndex(post).toString());
 
-        console.log(postInstance);
-
         postFormElements.postHashtagsInput.value = postInstance.hashTags.join(',');
         postFormElements.postDescriptionInput.value = postInstance.description;
         postFormElements.postHashtagsInput.value = postInstance.hashTags.join(',');
-
-        if (postInstance.hasOwnProperty('photoLink')) {
-            postFormElements.postImageInput.value = postInstance.photoLink;
-        }
-
 
         function editPostHandler(event) {
             event.preventDefault();
@@ -146,12 +161,17 @@ class Controller {
         document.querySelector('button.edit-post-button').addEventListener('click', editPostHandler);
     }
 
+    static logHandler() {
+        view.displayPage('authPage');
+    }
+
     static setMainHandlers() {
         document.addEventListener('DOMContentLoaded', function() {document.forms.filtersForm.reset();})
         document.querySelector('form.filters').addEventListener('submit', Controller.submitFiltersHandler);
         document.querySelector('button.more-button').addEventListener('click', Controller.loadMoreTweetsHandler);
         document.querySelector('button.add-button').addEventListener('click', Controller.addHandler);
-        document.querySelector('.posts').addEventListener('click', Controller.PostActionHandler);
+        document.querySelector('.posts').addEventListener('click', Controller.postActionHandler);
+        document.querySelector('button.log-in-out').addEventListener('click', Controller.logHandler);
     }
 
     static setAddPostHandlers() {

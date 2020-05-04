@@ -101,13 +101,13 @@ function getPostIndex(post) {
 
 class View {
     constructor() {
-        this._currentUser = 'Sasha';
-        View._setPostsDisplay(this);
+        this._currentUser = 'Alex';
+        View.setPostsDisplay(this);
 
         this.displayPage('mainPage');
     }
 
-    static _setPostsDisplay(pageView) {
+    static setPostsDisplay(pageView) {
         pageView._postsToShowCount = 10;
         pageView._postsList = testPosts;
         pageView._posts = document.querySelector('.posts');
@@ -137,8 +137,14 @@ class View {
 
     _authorizedUserDisplay() {
         if (this._currentUser === '') {
-            document.querySelector('.log-out').style.visibility = 'hidden';
+            document.querySelector('.log-in-out').textContent = 'Log in';
             document.querySelector('.user-info').style.visibility = 'hidden';
+            document.querySelector('.user-info').textContent = '';
+        }
+        else {
+            document.querySelector('.log-in-out').textContent = 'Log out';
+            document.querySelector('.user-info').style.visibility = 'visible';
+            document.querySelector('.user-info').textContent = 'Current User: ' + this._currentUser;
         }
     }
 
@@ -225,7 +231,7 @@ class View {
 
         document.querySelector('header').after(content);
         
-        View._setPostsDisplay(pageView);
+        View.setPostsDisplay(pageView);
         pageView.refreshPage();
 
         Controller.setMainHandlers();
@@ -301,8 +307,31 @@ class View {
     }
 
     
-    static _showAuthPage(visibility) {
-        
+    static _showAuthPage(pageView, visibility) {
+        if (visibility === 'hidden') {
+            let userForm = document.querySelector('.user-form')
+
+            if (userForm) {
+                userForm.remove();
+            }
+
+            return ;
+        }
+
+        let userForm = document.createElement('div');
+        userForm.className = 'user-form';
+
+        userForm.innerHTML = `
+        <form name="userForm">
+            <h2>Username</h2>
+            <input name="userNameInput" type="text" placeholder="user">
+            
+            <h2>Password</h2>
+            <input name="userPasswordInput" type="password">
+        </form>
+        `
+
+        document.querySelector('header').after(userForm);
     }
 }
 
