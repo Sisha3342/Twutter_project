@@ -36,12 +36,12 @@ class PostsList {
             if (post1.createdAt < post2.createdAt) {
                 return 1;
             }
-            else if (post2.createdAt < post1.createdAt) {
+            
+            if (post2.createdAt < post1.createdAt) {
                 return -1;
             }
-            else {
-                return 0;
-            }
+            
+            return 0;   
         });
 
         return new PostsList(postsToReturn.slice(skip, skip + top));
@@ -130,25 +130,6 @@ class PostsList {
         }
 
         return true;
-    }
-
-    addAll(newPosts) {
-        let invalidPosts = [];
-
-        for (let post in newPosts) {
-            if (PostsList.validate(post)) {
-                this.add(post);
-            }
-            else {
-                invalidPosts.push(post);
-            }
-        }
-
-        return invalidPosts;
-    }
-
-    clear() {
-        this._posts = [];
     }
 
     getLength() {

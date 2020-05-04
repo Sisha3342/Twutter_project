@@ -130,8 +130,13 @@ form.filters {
 }
 
 .filter {
-    margin: 5%;
+    margin: 2.5%;
     font-style: italic;
+}
+
+.filter > input {
+    font-size: 100%;
+    width: 40%;
 }
 
 input.apply-filters {

@@ -80,10 +80,13 @@ class View {
     }
 
     displayPage(page) {
-        let pageHandlers = {addPostPage: View._showAddPostPage,
-                            editPostPage: View._showEditPostPage,
-                            mainPage: View._showMainPage,
-                            authPage: View._showAuthPage};
+        let pageHandlers = {
+            addPostPage: View._showAddPostPage,
+            editPostPage: View._showEditPostPage,
+            mainPage: View._showMainPage,
+            authPage: View._showAuthPage
+        };
+
         for (let handler in pageHandlers) {
             if (handler === page) {
                 pageHandlers[handler](this, 'visible');
@@ -179,7 +182,7 @@ class View {
             </form>
             
             <button class="add-post-button">Add post</button>
-            <button class="back-button">Back</button>
+            <button class="back-button">Cancel</button>
         `;
 
         document.querySelector('header').after(addForm);
@@ -213,8 +216,8 @@ class View {
             <input name="postImageInput" type="file" accept=".jpg, .jpeg, .png">
         </form>
 
-        <button class="edit-post-button">Edit post</button>
-        <button class="back-button">Back</button>
+        <button class="edit-post-button">Save</button>
+        <button class="back-button">Cancel</button>
         `;
 
         document.querySelector('header').after(editForm);
@@ -249,8 +252,8 @@ class View {
         </form>
 
         <button class="log-in-button">Log in</button>
-        <button class="back-button">Back</button>
-        `
+        <button class="back-button">Cancel</button>
+        `;
 
         document.querySelector('header').after(userForm);
         Controller.setLogHandlers();
