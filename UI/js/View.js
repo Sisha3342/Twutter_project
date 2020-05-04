@@ -98,10 +98,13 @@ function getPostIndex(post) {
     });
 }
 
+registeredUsers = {Sasha: '3342',
+                  Alex: '123123'};
+
 
 class View {
     constructor() {
-        this._currentUser = 'Alex';
+        this._currentUser = '';
         View.setPostsDisplay(this);
 
         this.displayPage('mainPage');
@@ -136,6 +139,8 @@ class View {
     }
 
     _authorizedUserDisplay() {
+        document.querySelector('.log-in-out').style.visibility = 'visible';
+
         if (this._currentUser === '') {
             document.querySelector('.log-in-out').textContent = 'Log in';
             document.querySelector('.user-info').style.visibility = 'hidden';
@@ -318,6 +323,10 @@ class View {
             return ;
         }
 
+        document.querySelector('button.log-in-out').style.visibility = 'hidden';
+        document.querySelector('.user-info').style.visibility = 'hidden';
+        view._currentUser = '';
+
         let userForm = document.createElement('div');
         userForm.className = 'user-form';
 
@@ -329,9 +338,13 @@ class View {
             <h2>Password</h2>
             <input name="userPasswordInput" type="password">
         </form>
+
+        <button class="log-in-button">Log in</button>
+        <button class="back-button">Back</button>
         `
 
         document.querySelector('header').after(userForm);
+        Controller.setLogHandlers();
     }
 }
 

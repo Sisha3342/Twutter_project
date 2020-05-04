@@ -38,8 +38,12 @@ input {
     text-align: center;
 }
 
-.user-info > h2 {
-    display: inline;
+.user-form > button {
+    display: block;
+}
+
+.user-form > button.back-button {
+    margin: 2.5% 42%;
 }
 
 button.add-post-button {
@@ -62,6 +66,15 @@ button.edit-post-button {
 
 button.back-button {
     margin: 2.5%;
+    padding: 1%;
+    height: 40px;
+    width: 100px;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+button.log-in-button {
+    margin: 2.5% 42%;
     padding: 1%;
     height: 40px;
     width: 100px;

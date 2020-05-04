@@ -165,6 +165,25 @@ class Controller {
         view.displayPage('authPage');
     }
 
+    static logInHandler(event) {
+        event.preventDefault();
+
+        let userForm = document.forms.userForm.elements;
+        let userName = userForm.userNameInput.value;
+        let userPass = userForm.userPasswordInput.value;
+        
+        for (let user in registeredUsers) {
+            if (user === userName && registeredUsers[user] === userPass) {
+                view._currentUser = userName;
+                view.displayPage('mainPage');
+
+                return ;
+            }
+        }
+
+        alert('Incorrect username/password');
+    }
+
     static setMainHandlers() {
         document.addEventListener('DOMContentLoaded', function() {document.forms.filtersForm.reset();})
         document.querySelector('form.filters').addEventListener('submit', Controller.submitFiltersHandler);
@@ -177,5 +196,10 @@ class Controller {
     static setAddPostHandlers() {
         document.querySelector('button.back-button').addEventListener('click', Controller.backHandler);
         document.querySelector('button.add-post-button').addEventListener('click', Controller.addPostHandler);
+    }
+
+    static setLogHandlers() {
+        document.querySelector('button.back-button').addEventListener('click', Controller.backHandler);
+        document.querySelector('button.log-in-button').addEventListener('click', Controller.logInHandler);
     }
 }
