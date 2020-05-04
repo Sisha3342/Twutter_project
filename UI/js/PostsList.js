@@ -1,6 +1,8 @@
 class PostsList {
     constructor(posts) {
         this._posts = posts.concat();
+
+        this.saveToLocalStorage();
     }
 
     getPage(skip=0, top=10, filterConfig=undefined) {
@@ -152,6 +154,27 @@ class PostsList {
     getLength() {
         return this._posts.length;
     }
+
+    saveToLocalStorage() {
+        localStorage.setItem('posts', JSON.stringify(this));
+
+        // for (let i = 0; i < this.getLength(); i++) {
+        //     localStorage.setItem('post' + i, JSON.stringify(this._posts[i]));
+        // }
+    }
+
+    static restoreFromLocalStorage() {
+        // let posts = [];
+        
+        // for (let key in localStorage) {
+        //     if (localStorage.hasOwnProperty(key)) {
+        //         posts.push(JSON.parse(localStorage.getItem(key)));
+        //         console.log(localStorage.getItem(key).likes);
+        //     }
+        // }
+
+        return new PostsList(JSON.parse(localStorage.getItem('posts'))._posts);
+    }
 }
 
 function* generatePosts(postsCount) {
@@ -179,5 +202,90 @@ function* generatePosts(postsCount) {
                 likes: ['Sasha']
             };
         }
+    }
+}
+
+class PostDiv {
+    constructor(post) {
+        this._post = post;
+    }
+
+    getPostDiv() {
+        let post = document.createElement('div');
+
+        post.className = 'test-post';
+
+        post.append(this._getPostHeader());
+        post.append(this._getPostDescription());
+        post.append(this._getPostFooter());
+
+        return post;
+    }
+
+    _getPostHeader() {
+        let postHeader = document.createElement('div');
+
+        postHeader.className = 'post-header';
+        postHeader.innerHTML = '<h3>' + this._post.author + '</h3>' + '<h4>' + this._post.createdAt.toLocaleString() + '</h4>';
+        postHeader.innerHTML += '<i>' + this._post.hashTags.map(tag => {
+            return '#' + tag;
+        }); + '</i>';
+
+        return postHeader;
+    }
+
+    _getPostDescription() {
+        let postDescription = document.createElement('div');
+
+        postDescription.className = 'post-description';
+        postDescription.innerHTML = '<p>' + this._post.description + '</p>';
+
+        if (this._post.hasOwnProperty('photoLink')) {
+            let postDescriptionImage = document.createElement('img');
+
+            postDescriptionImage.className = 'post-image';
+            postDescriptionImage.setAttribute('src', this._post.photoLink);
+
+            postDescription.append(postDescriptionImage);
+        }
+
+        return postDescription;
+    }
+
+    _getPostFooter() {
+        let postFooter = document.createElement('div');
+        let likesDisplay = document.createElement('span');
+        let likesCount = document.createElement('span');
+        let postButtons = document.createElement('div');
+        let editButton = document.createElement('button');
+        let deleteButton = document.createElement('button');
+
+        
+        postFooter.className = 'post-footer';
+        
+        likesDisplay.className = 'likes-display';
+        likesDisplay.innerHTML = '<img class="post-like" src="images/like_image.png">';
+    
+        likesCount.className = 'likes-count';
+        likesCount.textContent = this._post.likes.length;
+
+        likesDisplay.append(likesCount);
+
+        postFooter.append(likesDisplay);
+        
+        postButtons.className = 'post-actions-buttons';
+        postButtons.style.visibility = 'hidden';
+
+        editButton.className = 'action-button';
+        editButton.textContent = 'Edit';
+
+        deleteButton.className = 'action-button';
+        deleteButton.textContent = 'Delete';
+
+        postButtons.append(editButton);
+        postButtons.append(deleteButton);
+        postFooter.append(postButtons);
+
+        return postFooter;
     }
 }

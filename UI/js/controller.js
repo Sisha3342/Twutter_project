@@ -71,6 +71,7 @@ class Controller {
 
         testPosts.add(post);
         testPostsDiv.push((new PostDiv(post)).getPostDiv());
+        testPosts.saveToLocalStorage();
 
         view.displayPage('mainPage');
     }
@@ -94,6 +95,7 @@ class Controller {
                 break;
             case 'post-like':
                 Controller.likePostHandler(post);
+                break;
             default:
                 break;
         }
@@ -106,6 +108,7 @@ class Controller {
             testPosts.remove(postIndex.toString());
             testPostsDiv.splice(postIndex, 1);
             
+            testPosts.saveToLocalStorage();
             View.setPostsDisplay(view);
             view.refreshPage();
         }
@@ -115,6 +118,8 @@ class Controller {
         let postIndex = getPostIndex(post);
         let postInstance = testPosts.get(postIndex.toString());
         let userIndex = postInstance.likes.indexOf(view._currentUser);
+
+        console.log(postInstance.likes);
 
         if (userIndex !== -1) {
             postInstance.likes.splice(userIndex, 1);
@@ -153,6 +158,7 @@ class Controller {
 
             testPosts.edit(getPostIndex(post).toString(), editedPost);
             testPostsDiv[getPostIndex(post)] = ((new PostDiv(testPosts.get(getPostIndex(post).toString()))).getPostDiv());
+            testPosts.saveToLocalStorage();
 
             view.displayPage('mainPage');
         }
@@ -202,4 +208,8 @@ class Controller {
         document.querySelector('button.back-button').addEventListener('click', Controller.backHandler);
         document.querySelector('button.log-in-button').addEventListener('click', Controller.logInHandler);
     }
+}
+
+window.onunload = function() {
+    testPosts.saveToLocalStorage();
 }
