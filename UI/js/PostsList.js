@@ -143,33 +143,17 @@ class PostsList {
     static restoreFromLocalStorage() {
         return new PostsList(JSON.parse(localStorage.getItem('posts'))._posts);
     }
-}
 
-function* generatePosts(postsCount) {
-    let date = new Date;
+    findMaxId() {
+        let maxId = Number.MIN_SAFE_INTEGER;
 
-    for (let i = 0; i < postsCount; i++) {
-        if (i % 2 === 0) {
-            yield {
-                id: i.toString(),
-                description: 'post number ' + i,
-                createdAt: new Date(date.getTime() + i * 100000000),
-                author: 'Sasha',
-                hashTags: ['js' + i, 'task6'],
-                likes: ['Misha', 'Alex', 'Mike']
-            };
+        for (let post of this._posts) {
+            if (parseInt(post.id) > maxId) {
+                maxId = parseInt(post.id);
+            }
         }
-        else {
-            yield {
-                id: i.toString(),
-                description: 'post number ' + i,
-                createdAt: new Date(date.getTime() - i * 100000000),
-                author: 'Alex',
-                photoLink: 'images/forest_image.png',
-                hashTags: ['js', 'task6'],
-                likes: ['Sasha']
-            };
-        }
+
+        return maxId.toString();
     }
 }
 

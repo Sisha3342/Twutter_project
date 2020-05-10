@@ -58,7 +58,7 @@ class Controller {
         let addedPost = document.forms.postForm.elements; 
         let post = {};
 
-        post.id = testPosts.getLength().toString();
+        post.id = (parseInt(testPosts.findMaxId()) + 1).toString();
         post.author = view._currentUser;
         post.createdAt = new Date();
         post.likes = [];
@@ -70,8 +70,6 @@ class Controller {
         }
 
         testPosts.add(post);
-        testPostsDiv.push((new PostDiv(post)).getPostDiv());
-        testPosts.saveToLocalStorage();
 
         view.displayPage('mainPage');
     }
@@ -103,23 +101,26 @@ class Controller {
 
     static deletePostHandler(post) {
         if (confirm('Delete this post?')) {
-            let postIndex = getPostIndex(post);
+            let postId = getPostId(post);
 
-            testPosts.remove(postIndex.toString());
-            testPostsDiv.splice(postIndex, 1);
+            testPosts.remove(postId);
+            delete testPostsDiv.postId;
             
-            testPosts.saveToLocalStorage();
             View.setPostsDisplay(view);
             view.refreshPage();
+            document.forms.filtersForm.reset();
+
+            console.log(testPosts);
         }
     }
 
     static likePostHandler(post) {
-        let postIndex = getPostIndex(post);
-        let postInstance = testPosts.get(postIndex.toString());
-        let userIndex = postInstance.likes.indexOf(view._currentUser);
+        let postId = getPostId(post);
 
-        console.log(postInstance.likes);
+        console.log(postId);
+
+        let postInstance = testPosts.get(postId);
+        let userIndex = postInstance.likes.indexOf(view._currentUser);
 
         if (userIndex !== -1) {
             postInstance.likes.splice(userIndex, 1);
@@ -133,12 +134,20 @@ class Controller {
             let likesCount = post.querySelector('.likes-count');
             likesCount.textContent = +likesCount.textContent + 1 + '';
         }
+
+        for (let post of testPosts._posts) {
+            testPostsDiv[post.id] = (new PostDiv(post)).getPostDiv();
+        }
+
+        console.log(testPosts);
     }
 
     static processEditPostPage(post) {
         view.displayPage('editPostPage');
+
         let postFormElements = document.forms.postForm.elements; 
-        let postInstance = testPosts.get(getPostIndex(post).toString());
+        let postId = getPostId(post);
+        let postInstance = testPosts.get(postId);
 
         postFormElements.postHashtagsInput.value = postInstance.hashTags.join(',');
         postFormElements.postDescriptionInput.value = postInstance.description;
@@ -156,9 +165,7 @@ class Controller {
                 editedPost.photoLink = post.postImageInput.value;
             }
 
-            testPosts.edit(getPostIndex(post).toString(), editedPost);
-            testPostsDiv[getPostIndex(post)] = ((new PostDiv(testPosts.get(getPostIndex(post).toString()))).getPostDiv());
-            testPosts.saveToLocalStorage();
+            testPosts.edit(postId, editedPost);
 
             view.displayPage('mainPage');
         }

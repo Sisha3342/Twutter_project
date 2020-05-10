@@ -1,10 +1,13 @@
-function getPostIndex(post) {
-    return testPostsDiv.findIndex(function(currentPost) {
-        return post.querySelector('h3').textContent === currentPost.querySelector('h3').textContent &&
-               post.querySelector('h4').textContent === currentPost.querySelector('h4').textContent &&
-               post.querySelector('.post-description').textContent ===
-               currentPost.querySelector('.post-description').textContent;
-    });
+function getPostId(post) {
+    for (let [id, currentPost] of Object.entries(testPostsDiv)) {
+        if (post.querySelector('h3').textContent === currentPost.querySelector('h3').textContent &&
+            post.querySelector('h4').textContent === currentPost.querySelector('h4').textContent &&
+            post.querySelector('.post-description').textContent === currentPost.querySelector('.post-description').textContent) {
+                return id;
+        }               
+    }
+
+    return "-1";
 }
 
 registeredUsers = {Sasha: '3342',
@@ -31,11 +34,18 @@ class View {
     }
 
     setPostsList(postsList) {
+        this._postsToShowCount = 10;
         this._postsList = postsList;
         this.refreshPage();
     }
 
     refreshPage() {
+        testPosts.saveToLocalStorage();
+
+        for (let post of testPosts._posts) {
+            testPostsDiv[post.id] = (new PostDiv(post)).getPostDiv();
+        }
+
         this._authorizedUserDisplay();
         this._authorizedAddDisplay();
         this._posts.innerHTML = '';
