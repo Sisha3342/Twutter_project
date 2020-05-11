@@ -1,0 +1,2 @@
+SELECT * FROM mydb.post
+WHERE USER_ID = 1;

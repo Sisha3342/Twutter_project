@@ -1,0 +1,2 @@
+SELECT * FROM mydb.post
+ORDER BY CREATED_AT;
