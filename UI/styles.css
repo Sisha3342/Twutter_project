@@ -4,6 +4,84 @@ body {
     background-color: blanchedalmond;
 }
 
+textarea {
+    width: 50%;
+}
+
+input {
+    width: 30%;
+    height: 30px;
+    font-size: 20px;
+}
+
+.add-post {
+    margin: 1% 15%;
+    padding: 1%;
+    background-color: aqua;
+    width: 70%;
+    text-align: center;
+}
+
+.edit-post {
+    margin: 1% 15%;
+    padding: 1%;
+    background-color: aqua;
+    width: 70%;
+    text-align: center;
+}
+
+.user-form {
+    margin: 1% 15%;
+    padding: 1%;
+    background-color: aqua;
+    width: 70%;
+    text-align: center;
+}
+
+.user-form > button {
+    display: block;
+}
+
+.user-form > button.back-button {
+    margin: 2.5% 45%;
+}
+
+button.add-post-button {
+    margin: 2.5%;
+    padding: 1%;
+    height: 40px;
+    width: 100px;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+button.edit-post-button {
+    margin: 2.5%;
+    padding: 1%;
+    height: 40px;
+    width: 100px;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+button.back-button {
+    margin: 2.5%;
+    padding: 1%;
+    height: 40px;
+    width: 100px;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+button.log-in-button {
+    margin: 2.5% 45%;
+    padding: 1%;
+    height: 40px;
+    width: 100px;
+    font-size: 17px;
+    cursor: pointer;
+}
+
 header {
     z-index: 1;
     position: sticky;
@@ -22,23 +100,17 @@ h1.site-name {
     cursor: default;
 }
 
-button.log-out {
+button.log-in-out {
     float: right;
     margin: 0.5% 5% 0.5% 2.5%;
     font-size: 18px;
     width: 80px;
     cursor: pointer;
-    visibility: visible;
 }
 
 .user-info {
-    margin: 0.5% 2.5% 0.5% 10%;
+    margin: 0.5% 2.5% 0.5% 5%;
     float: left;
-}
-
-img.user-icon {
-    width: 20px;
-    cursor: pointer;
 }
 
 .content {
@@ -46,7 +118,7 @@ img.user-icon {
     padding: 0.5%;
 }
 
-.filters {
+form.filters {
     vertical-align: top;
     display: inline-block;
     margin: 0.5% 0.5% 1% 0.1%;
@@ -58,11 +130,16 @@ img.user-icon {
 }
 
 .filter {
-    margin: 5%;
+    margin: 2.5%;
     font-style: italic;
 }
 
-button.apply-filters {
+.filter > input {
+    font-size: 100%;
+    width: 40%;
+}
+
+input.apply-filters {
     width: 70px;
     font-size: 15px;
     font-weight: bolder;
@@ -119,6 +196,7 @@ img.post-image {
 img.post-like {
     width: 20px; 
     margin: 1px;
+    cursor: pointer;
 }
 
 .likes-count {
@@ -164,7 +242,7 @@ footer {
 }
 
 @media only screen and (max-width: 1535px) {
-    .filters {
+    form.filters {
         width: 50%;
         margin: 0.5% auto;
         display: block;
@@ -191,11 +269,11 @@ footer {
         margin: 1%;
     }
 
-    .filters {
+    form.filters {
         font-size: 10px;
     }
 
-    .filters > button.apply-filters {
+    form.filters > button.apply-filters {
         font-size: 12px;
     }
 

@@ -1,0 +1,3 @@
+Working with createTestPosts.js file:
+First time: second line commented, first uncommented
+Future times: second line uncommented, first line commented

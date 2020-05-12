@@ -1,20 +1,33 @@
 class PostsList {
     constructor(posts) {
         this._posts = posts.concat();
+
+        this.saveToLocalStorage();
     }
 
-    getPage(skip=0, top=this._posts.length, filterConfig=undefined) {
+    getPage(skip=0, top=10, filterConfig=undefined) {
         let postsToReturn = this._posts.concat();
 
         if (filterConfig) {
-            for(let property in filterConfig) {
-                if (property === 'hashTags') {
-                    for(let i = 0; i < filterConfig.hashTags.length; i++) {
-                        postsToReturn = postsToReturn.filter(post => post.hashTags.includes(filterConfig.hashTags[i]))
-                    }
-                }
-                else {
-                    postsToReturn = postsToReturn.filter(post => post[property] === filterConfig[property]);
+            for (let property in filterConfig) {
+                switch (property) {
+                    case "hashTags":
+                        for(let i = 0; i < filterConfig.hashTags.length; i++) {
+                            postsToReturn = postsToReturn.filter(post => post.hashTags.includes(filterConfig.hashTags[i]));
+                        }
+                        break;
+                    case "startDate":
+                        postsToReturn = postsToReturn.filter(post => post.createdAt >= filterConfig.startDate);
+                        break;
+                    case "endDate":
+                        postsToReturn = postsToReturn.filter(post => post.createdAt <= filterConfig.endDate);
+                        break;
+                    case "author":
+                        postsToReturn = postsToReturn.filter(post => post["author"].includes(filterConfig["author"]));
+                        break;
+                    default:
+                        postsToReturn = postsToReturn.filter(post => post[property] === filterConfig[property]);
+                        break;
                 }
             }
         }
@@ -23,15 +36,15 @@ class PostsList {
             if (post1.createdAt < post2.createdAt) {
                 return 1;
             }
-            else if (post2.createdAt < post1.createdAt) {
+            
+            if (post2.createdAt < post1.createdAt) {
                 return -1;
             }
-            else {
-                return 0;
-            }
+            
+            return 0;   
         });
 
-        return postsToReturn.slice(skip, skip + top);
+        return new PostsList(postsToReturn.slice(skip, skip + top));
     }
 
     get(id) {
@@ -51,7 +64,7 @@ class PostsList {
             case 'hashTags':
                 return post.hashTags && post.hashTags.every(tag => typeof tag === 'string');
             case 'likes':
-                return post.hashTags && post.likes.every(tag => typeof tag === 'string');
+                return post.likes && post.likes.every(tag => typeof tag === 'string');
             case 'photoLink':
                 return typeof post.photoLink === 'string';
             default:
@@ -93,7 +106,7 @@ class PostsList {
     }
 
     static _validateEditPost(post) {
-        for(let property in post) {
+        for (let property in post) {
             if (property === 'id' || property === 'createdAt' || property === 'author' || property === 'likes') {
                 return false;
             }
@@ -112,65 +125,42 @@ class PostsList {
 
         let postToEdit = this.get(id);
 
-        for(let property in post) {
+        for (let property in post) {
             postToEdit[property] = post[property];
         }
 
         return true;
     }
 
-    addAll(newPosts) {
-        let invalidPosts = [];
-
-        for (let post in newPosts) {
-            if (PostsList.validate(post)) {
-                this.add(post);
-            }
-            else {
-                invalidPosts.push(post);
-            }
-        }
-
-        return invalidPosts;
+    getLength() {
+        return this._posts.length;
     }
 
-    clear() {
-        this._posts = [];
+    saveToLocalStorage() {
+        localStorage.setItem('posts', JSON.stringify(this));
     }
-}
 
-function* generatePosts(postsCount) {
-    let date = new Date;
+    static restoreFromLocalStorage() {
+        return new PostsList(JSON.parse(localStorage.getItem('posts'))._posts);
+    }
 
-    for(let i = 0; i < postsCount; i++) {
-        if (i % 2 === 0) {
-            yield {
-                id: i.toString(),
-                description: 'post number ' + i,
-                createdAt: new Date(date.getTime() + i * 10000),
-                author: 'Sasha' + i,
-                hashTags: ['js' + i, 'task6'],
-                likes: ['Misha', 'Alex', 'Mike']
-            };
+    findMaxId() {
+        let maxId = Number.MIN_SAFE_INTEGER;
+
+        for (let post of this._posts) {
+            if (parseInt(post.id) > maxId) {
+                maxId = parseInt(post.id);
+            }
         }
-        else {
-            yield {
-                id: i.toString(),
-                description: 'post number ' + i,
-                createdAt: new Date(date.getTime() - i * 10000),
-                author: 'Alex',
-                photoLink: 'images/forest_image.png',
-                hashTags: ['js', 'task6'],
-                likes: ['Sasha']
-            };
-        }
+
+        return maxId.toString();
     }
 }
 
 class PostDiv {
-    constructor(post, isAuthorized) {
+    constructor(post) {
         this._post = post;
-    } 
+    }
 
     getPostDiv() {
         let post = document.createElement('div');
@@ -188,9 +178,9 @@ class PostDiv {
         let postHeader = document.createElement('div');
 
         postHeader.className = 'post-header';
-        postHeader.innerHTML = '<h3>' + this._post.author + ', ' + this._post.createdAt.toLocaleString() + '</h3>';
-        postHeader.innerHTML += '<i>' + this._post.hashTags.map(post => {
-            return '#' + post;
+        postHeader.innerHTML = '<h3>' + this._post.author + '</h3>' + '<h4>' + this._post.createdAt.toLocaleString() + '</h4>';
+        postHeader.innerHTML += '<i>' + this._post.hashTags.map(tag => {
+            return '#' + tag;
         }); + '</i>';
 
         return postHeader;
@@ -236,6 +226,7 @@ class PostDiv {
         postFooter.append(likesDisplay);
         
         postButtons.className = 'post-actions-buttons';
+        postButtons.style.visibility = 'hidden';
 
         editButton.className = 'action-button';
         editButton.textContent = 'Edit';
@@ -249,79 +240,4 @@ class PostDiv {
 
         return postFooter;
     }
-}
-
-testPosts = new PostsList([...generatePosts(20)]);
-
-class View {
-    constructor() {
-        this._is_authorized = true;
-        this._posts = document.querySelector('.posts');
-        this._postsList = testPosts;
-    }
-
-    refreshPage() {
-        this._authorizedUserDisplay();
-        this._authorizedAddDisplay();
-
-        this._posts.innerHTML = '';
-
-        this._postsList.getPage().forEach(post => {
-            this._posts.append((new PostDiv(post)).getPostDiv());
-        });
-
-        this._authorizedPostDisplay();
-    }
-
-    _authorizedUserDisplay() {
-        if (!this._is_authorized) {
-            document.querySelector('.log-out').style.visibility = 'hidden';
-            document.querySelector('.user-info').style.visibility = 'hidden';
-        }
-    }
-
-    _authorizedPostDisplay() {
-       if (!this._is_authorized) {
-           let actionButtons = document.querySelectorAll('.post-actions-buttons');
-           actionButtons.forEach(element => {
-               element.style.visibility = 'hidden';
-           });
-       }
-    }
-
-    _authorizedAddDisplay() {
-        if (!this._is_authorized) {
-            document.querySelector('.add-button').style.visibility = 'hidden';
-        }
-    }
-}
-
-let view = new View();
-view.refreshPage();
-
-function addPost(post) {
-    if (view._postsList.add(post)) {
-        view.refreshPage();
-        return true;
-    }
-
-    return false;
-}
-
-function removePost(id) {
-    if (view._postsList.remove(id)) {
-        view.refreshPage();
-        return true;
-    }
-
-    return false;
-}
-
-function editPost(id, post) {
-    if (view._postsList.edit(id, post)) {
-        refreshPage();
-        return true;
-    }
-
-    return false;
 }
