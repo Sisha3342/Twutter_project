@@ -55,23 +55,28 @@ class Controller {
     static addPostHandler(event) {
         event.preventDefault();
 
-        let addedPost = document.forms.postForm.elements; 
-        let post = {};
+        // let addedPost = document.forms.postForm.elements;
+        // let post = {};
+        //
+        // post.id = (parseInt(testPosts.findMaxId()) + 1).toString();
+        // post.author = view._currentUser;
+        // post.createdAt = new Date();
+        // post.likes = [];
+        // post.hashTags = addedPost.postHashtagsInput.value.split(',');
+        // post.description = addedPost.postDescriptionInput.value;
 
-        post.id = (parseInt(testPosts.findMaxId()) + 1).toString();
-        post.author = view._currentUser;
-        post.createdAt = new Date();
-        post.likes = [];
-        post.hashTags = addedPost.postHashtagsInput.value.split(',');
-        post.description = addedPost.postDescriptionInput.value;
+        let formData = new FormData(document.forms.postForm);
+        formData.append('id', (parseInt(testPosts.findMaxId()) + 1).toString());
+        formData.append('author', view._currentUser);
+        formData.append('createdAt', (new Date()).toISOString().
+        replace(/T/, ' ').replace(/\..+/, ''));
+        formData.append('likes', [].toString());
 
-        if (addedPost.postImageInput.value !== '') {
-            post.photoLink = addedPost.postImageInput.value;
-        }
+        testPosts.add(formData).then(function () {
+            fetchPosts();
 
-        testPosts.add(post);
-
-        view.displayPage('mainPage');
+            view.displayPage('mainPage');
+        });
     }
 
     static postActionHandler(event) {

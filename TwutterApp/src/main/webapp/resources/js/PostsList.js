@@ -81,14 +81,13 @@ class PostsList {
                validProperty(post, 'likes');
     }
 
-    add(post) {
-        if (PostsList.validate(post)) {
-            this._posts.push(post);
+    async add(post) {
+        let addPost = fetch('http://localhost:8080/tweets', {
+            method: 'POST',
+            body: post
+        });
 
-            return true;
-        }
-
-        return false;
+        return (await addPost).text();
     }
 
     async remove(id) {
