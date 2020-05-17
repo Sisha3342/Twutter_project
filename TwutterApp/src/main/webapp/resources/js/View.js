@@ -39,8 +39,6 @@ class View {
     }
 
     refreshPage() {
-        testPosts.saveToLocalStorage();
-
         for (let post of testPosts._posts) {
             testPostsDiv[post.id] = (new PostDiv(post)).getPostDiv();
         }

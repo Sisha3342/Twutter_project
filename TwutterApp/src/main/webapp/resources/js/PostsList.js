@@ -1,8 +1,6 @@
 class PostsList {
     constructor(posts) {
         this._posts = posts.concat();
-
-        this.saveToLocalStorage();
     }
 
     getPage(skip=0, top=10, filterConfig=undefined) {
@@ -101,43 +99,17 @@ class PostsList {
         return (await removePost).text();
     }
 
-    static _validateEditPost(post) {
-        for (let property in post) {
-            if (property === 'id' || property === 'createdAt' || property === 'author' || property === 'likes') {
-                return false;
-            }
-            else if (!PostsList._validate_property(post, property)) {
-                return false;
-            }
-        }
+    async edit(id, post) {
+        let editPost = fetch('http://localhost:8080/tweets?id=' + id, {
+            method: 'PUT',
+            body: JSON.stringify(post)
+        });
 
-        return true;
-    }
-
-    edit(id, post) {
-        if (!PostsList._validateEditPost(post)) {
-            return false;
-        }
-
-        let postToEdit = this.get(id);
-
-        for (let property in post) {
-            postToEdit[property] = post[property];
-        }
-
-        return true;
+        return (await editPost).text();
     }
 
     getLength() {
         return this._posts.length;
-    }
-
-    saveToLocalStorage() {
-        localStorage.setItem('posts', JSON.stringify(this));
-    }
-
-    static restoreFromLocalStorage() {
-        return new PostsList(JSON.parse(localStorage.getItem('posts'))._posts);
     }
 
     findMaxId() {

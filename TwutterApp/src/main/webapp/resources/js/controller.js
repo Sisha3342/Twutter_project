@@ -117,29 +117,29 @@ class Controller {
     static likePostHandler(post) {
         let postId = getPostId(post);
 
-        console.log(postId);
-
         let postInstance = testPosts.get(postId);
         let userIndex = postInstance.likes.indexOf(view._currentUser);
 
         if (userIndex !== -1) {
             postInstance.likes.splice(userIndex, 1);
 
-            let likesCount = post.querySelector('.likes-count');
-            likesCount.textContent = +likesCount.textContent - 1 + '';
+            testPosts.edit(postId, {likes: postInstance.likes}).then(function () {
+                let likesCount = post.querySelector('.likes-count');
+                likesCount.textContent = +likesCount.textContent - 1 + '';
+
+                fetchPosts();
+            });
         }
         else {
             postInstance.likes.push(view._currentUser);
 
-            let likesCount = post.querySelector('.likes-count');
-            likesCount.textContent = +likesCount.textContent + 1 + '';
-        }
+            testPosts.edit(postId, {likes: postInstance.likes}).then(function () {
+                let likesCount = post.querySelector('.likes-count');
+                likesCount.textContent = +likesCount.textContent + 1 + '';
 
-        for (let post of testPosts._posts) {
-            testPostsDiv[post.id] = (new PostDiv(post)).getPostDiv();
+                fetchPosts();
+            });
         }
-
-        console.log(testPosts);
     }
 
     static processEditPostPage(post) {
@@ -216,7 +216,3 @@ class Controller {
         document.querySelector('button.log-in-button').addEventListener('click', Controller.logInHandler);
     }
 }
-
-window.onunload = function() {
-    testPosts.saveToLocalStorage();
-};
