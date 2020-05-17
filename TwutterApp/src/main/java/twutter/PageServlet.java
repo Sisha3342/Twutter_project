@@ -9,6 +9,6 @@ import java.io.IOException;
 public class PageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        request.getRequestDispatcher("page.jsp").forward(request, response);
+        request.getRequestDispatcher("index.html").forward(request, response);
     }
 }
