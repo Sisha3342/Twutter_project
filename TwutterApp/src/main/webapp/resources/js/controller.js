@@ -2,37 +2,21 @@ class Controller {
     static submitFiltersHandler(event) {
         event.preventDefault();
 
-        let filtersInputs = document.forms.filtersForm.elements;
-        let filterObject = {};
+        let filtersForm = new FormData(document.forms.filtersForm);
 
-        for (let input of filtersInputs) {
-           switch (input.name) {
-               case 'nameInput':
-                   if (input.value !== '') {
-                       filterObject['author'] = input.value;
-                   }
-                   break;
-                case 'startDateInput':
-                    if (input.value !== '') {
-                        filterObject["startDate"] = Date.parse(input.value);
-                    }
-                    break;
-                case 'endDateInput':
-                    if (input.value !== '') {
-                        filterObject['endDate'] = Date.parse(input.value);
-                    }
-                    break;
-                case 'hashTagsInput':
-                    if (input.value !== '') {
-                        filterObject['hashTags'] = input.value.split(' ');
-                    }
-                    break;
-                default:
-                    break;
+        testPosts.getPage(0, testPosts.getLength(), filtersForm).then(function (response) {
+            let filtered;
+
+
+            if (response === "") {
+                filtered = new PostsList([]);
             }
-        }
-        
-        view.setPostsList(testPosts.getPage(undefined, testPosts.getLength(), filterObject));
+            else {
+                filtered = new PostsList(response.split('\n').map(JSON.parse));
+            }
+            
+            view.setPostsList(filtered);
+        })
     }
 
     static loadMoreTweetsHandler() {

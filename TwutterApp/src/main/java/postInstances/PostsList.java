@@ -1,6 +1,7 @@
-package twutter;
+package postInstances;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PostsList {
     private List<Post> posts;
@@ -86,7 +87,47 @@ public class PostsList {
         return true;
     }
 
-    public List<Post> getPosts() {
-        return posts;
+    public List<Post> getPosts(int skip, int top, Filter filter) {
+        List<Post> filteredPosts = posts.subList(skip, skip + top);
+
+        if (filter != null) {
+            if (!filter.getAuthor().equals("")) {
+                filteredPosts = filteredPosts.stream().filter(post -> post.getAuthor().
+                        equals(filter.getAuthor())).collect(Collectors.toList());
+            }
+
+            if (filter.getStartDate() != null) {
+                filteredPosts = filteredPosts.stream().filter(post -> post.getCreatedAt().
+                        after(filter.getStartDate())).collect(Collectors.toList());
+            }
+
+            if (filter.getEndDate() != null) {
+                filteredPosts = filteredPosts.stream().filter(post -> post.getCreatedAt().
+                        before(filter.getEndDate())).collect(Collectors.toList());
+            }
+
+            if (!filter.getHashTags().isEmpty()) {
+                filteredPosts = filteredPosts.stream().filter(post -> post.getHashTags().
+                        containsAll(filter.getHashTags())).collect(Collectors.toList());
+            }
+        }
+
+        filteredPosts.sort((post1, post2) -> {
+            if (post1.getCreatedAt().after(post2.getCreatedAt())) {
+                return -1;
+            }
+
+            if (post1.getCreatedAt().before(post2.getCreatedAt())) {
+                return 1;
+            }
+
+            return 0;
+        });
+
+        return filteredPosts;
+    }
+
+    public int getLength() {
+        return posts.size();
     }
 }

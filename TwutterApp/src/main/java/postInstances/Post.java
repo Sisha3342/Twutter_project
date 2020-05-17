@@ -1,4 +1,4 @@
-package twutter;
+package postInstances;
 
 import java.util.Date;
 import java.util.List;

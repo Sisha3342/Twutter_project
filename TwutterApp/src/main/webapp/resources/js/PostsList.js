@@ -3,86 +3,21 @@ class PostsList {
         this._posts = posts.concat();
     }
 
-    getPage(skip=0, top=10, filterConfig=undefined) {
-        let postsToReturn = this._posts.concat();
-
-        if (filterConfig) {
-            for (let property in filterConfig) {
-                switch (property) {
-                    case "hashTags":
-                        for(let i = 0; i < filterConfig.hashTags.length; i++) {
-                            postsToReturn = postsToReturn.filter(post => post.hashTags.includes(filterConfig.hashTags[i]));
-                        }
-                        break;
-                    case "startDate":
-                        postsToReturn = postsToReturn.filter(post => post.createdAt >= filterConfig.startDate);
-                        break;
-                    case "endDate":
-                        postsToReturn = postsToReturn.filter(post => post.createdAt <= filterConfig.endDate);
-                        break;
-                    case "author":
-                        postsToReturn = postsToReturn.filter(post => post["author"].includes(filterConfig["author"]));
-                        break;
-                    default:
-                        postsToReturn = postsToReturn.filter(post => post[property] === filterConfig[property]);
-                        break;
-                }
-            }
-        }
-
-        postsToReturn.sort(function (post1, post2) {
-            if (post1.createdAt < post2.createdAt) {
-                return 1;
-            }
-            
-            if (post2.createdAt < post1.createdAt) {
-                return -1;
-            }
-            
-            return 0;   
+    async getPage(skip=0, top=10, filterConfig=undefined) {
+        let filterPosts = await fetch('http://localhost:8080/tweets?skip=' + skip + '&top=' + top, {
+            method: 'POST',
+            body: filterConfig
         });
 
-        return new PostsList(postsToReturn.slice(skip, skip + top));
+        return (await filterPosts).text();
     }
 
     get(id) {
         return this._posts.find(post => post.id === id);
     }
 
-    static _validate_property(post, property) {
-        switch (property) {
-            case 'id':
-                return typeof post.id === 'string';
-            case 'description':
-                return typeof post.description === 'string' && post.description.length < 200;
-            case 'createdAt':
-                return Object.prototype.toString.call(post.createdAt) === '[object Date]';
-            case 'author':
-                return typeof post.author === 'string' && post.author.length !== 0;
-            case 'hashTags':
-                return post.hashTags && post.hashTags.every(tag => typeof tag === 'string');
-            case 'likes':
-                return post.likes && post.likes.every(tag => typeof tag === 'string');
-            case 'photoLink':
-                return typeof post.photoLink === 'string';
-            default:
-                return false;
-        }
-    }
-
-    static validate(post) {
-        let validProperty = PostsList._validate_property;
-
-        return validProperty(post, 'id') &&
-               validProperty(post, 'description') &&
-               validProperty(post, 'createdAt') &&
-               validProperty(post, 'author') &&
-               validProperty(post, 'hashTags') &&
-               validProperty(post, 'likes');
-    }
-
     async add(post) {
-        let addPost = fetch('http://localhost:8080/tweets', {
+        let addPost = await fetch('http://localhost:8080/tweets', {
             method: 'POST',
             body: post
         });
@@ -91,7 +26,7 @@ class PostsList {
     }
 
     async remove(id) {
-        let removePost = fetch('http://localhost:8080/tweets?id=' + id, {
+        let removePost = await fetch('http://localhost:8080/tweets?id=' + id, {
             method: 'DELETE'
         });
 
@@ -99,7 +34,7 @@ class PostsList {
     }
 
     async edit(id, post) {
-        let editPost = fetch('http://localhost:8080/tweets?id=' + id, {
+        let editPost = await fetch('http://localhost:8080/tweets?id=' + id, {
             method: 'PUT',
             body: JSON.stringify(post)
         });
