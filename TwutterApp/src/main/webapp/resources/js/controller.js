@@ -103,14 +103,14 @@ class Controller {
         if (confirm('Delete this post?')) {
             let postId = getPostId(post);
 
-            testPosts.remove(postId);
-            delete testPostsDiv.postId;
-            
-            View.setPostsDisplay(view);
-            view.refreshPage();
-            document.forms.filtersForm.reset();
+            testPosts.remove(postId).then(function () {
 
-            console.log(testPosts);
+                fetchPosts();
+
+                View.setPostsDisplay(view);
+                view.refreshPage();
+                document.forms.filtersForm.reset();
+            });
         }
     }
 

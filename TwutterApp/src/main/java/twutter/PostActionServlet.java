@@ -2,20 +2,17 @@ package twutter;
 
 import com.google.gson.Gson;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class PostActionServlet extends HttpServlet {
-    private static PostsList posts = new PostsList();
+    private static PostsList posts = new PostsList(15);
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String parameterName = "id";
         String postId = req.getParameter(parameterName);
 
@@ -25,7 +22,7 @@ public class PostActionServlet extends HttpServlet {
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String parameterName = "id";
         String postId = req.getParameter(parameterName);
 
@@ -33,7 +30,7 @@ public class PostActionServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String[] reqUri = req.getRequestURI().split("/");
 
         if (reqUri.length == 3 && reqUri[2].equals("search")) {
@@ -51,7 +48,7 @@ public class PostActionServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String parameterName = "id";
         String postId = req.getParameter(parameterName);
 

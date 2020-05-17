@@ -5,20 +5,27 @@ import java.util.*;
 public class PostsList {
     private List<Post> posts;
 
-    public PostsList() {
+    public PostsList(int postsCount) {
         posts = new ArrayList<>();
 
-        this.add(new Post.Builder("1", "abc", new Date(), "Sasha")
-                .setPhotoLink("link")
-                .setHashTags(List.of("tag1", "tag2"))
-                .setLikes(List.of("Alex", "Misha"))
-                .build());
-
-        this.add(new Post.Builder("2", "abc", new Date(), "Alex")
-                .setPhotoLink("link123")
-                .setHashTags(List.of("tag1", "tag3"))
-                .setLikes(List.of("Alex"))
-                .build());
+        for (int i = 0; i < postsCount; i++) {
+            if (i % 2 == 0) {
+                this.add(new Post.Builder(String.valueOf(i), "post number" + i, new Date(), "Sasha")
+                        .setHashTags(List.of("js" + i, "task12"))
+                        .setLikes(List.of("Alex", "Misha", "Mike"))
+                        .build());
+            }
+            else {
+                this.add(new Post.Builder(String.valueOf(i),
+                        "post number" + i,
+                        new Date(i * 100000000),
+                        "Alex")
+                        .setPhotoLink("images/forest_image.png")
+                        .setHashTags(List.of("js", "task12"))
+                        .setLikes(List.of("Sasha"))
+                        .build());
+            }
+        }
     }
 
     public Post getPost(String id) {
@@ -52,21 +59,6 @@ public class PostsList {
         return posts.removeIf(post -> post.getId().equals(id));
     }
 
-    public List<Post> addAll(List<Post> newPosts) {
-        List<Post> invalidPosts = new ArrayList<>();
-
-        for (Post post: newPosts) {
-            if (validate(post)) {
-                posts.add(post);
-            }
-            else {
-                invalidPosts.add(post);
-            }
-        }
-
-        return invalidPosts;
-    }
-
     public boolean edit(String id, Post post) {
         Post foundPost = this.getPost(id);
 
@@ -92,10 +84,6 @@ public class PostsList {
         }
 
         return true;
-    }
-
-    public void clear() {
-        posts.clear();
     }
 
     public List<Post> getPosts() {

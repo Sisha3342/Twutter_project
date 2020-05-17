@@ -93,16 +93,12 @@ class PostsList {
         return false;
     }
 
-    remove(id) {
-        let postIndex = this._posts.findIndex(post => post.id === id)
+    async remove(id) {
+        let removePost = fetch('http://localhost:8080/tweets?id=' + id, {
+            method: 'DELETE'
+        });
 
-        if (postIndex !== -1) {
-            this._posts.splice(postIndex, 1);
-
-            return true;
-        }
-
-        return false;
+        return (await removePost).text();
     }
 
     static _validateEditPost(post) {

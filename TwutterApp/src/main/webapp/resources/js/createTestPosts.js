@@ -1,5 +1,5 @@
 let testPosts;
-let testPostsDiv = {};
+let testPostsDiv;
 
 function fetchPosts() {
     let xhr = new XMLHttpRequest();
@@ -8,6 +8,7 @@ function fetchPosts() {
     xhr.send();
 
     testPosts = new PostsList(xhr.response.split('\n').map(JSON.parse));
+    testPostsDiv = {};
 
     for (let post of testPosts._posts) {
         testPostsDiv[post.id] = (new PostDiv(post)).getPostDiv();
