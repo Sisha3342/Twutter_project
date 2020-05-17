@@ -214,13 +214,13 @@ class View {
         editForm.innerHTML = `
         <form name="postForm">
             <h2>HashTags (separated by ',')</h2>
-            <input name="postHashtagsInput" type="text" placeholder="tags">
+            <input name="hashTags" type="text" placeholder="tags">
             
             <h2>Description</h2>
-            <textarea name="postDescriptionInput" rows="10"></textarea>
+            <textarea name="description" rows="10"></textarea>
             
             <h2>Image</h2>
-            <input name="postImageInput" type="file" accept=".jpg, .jpeg, .png">
+            <input name="photoLink" type="file" accept=".jpg, .jpeg, .png">
         </form>
 
         <button class="edit-post-button">Save</button>

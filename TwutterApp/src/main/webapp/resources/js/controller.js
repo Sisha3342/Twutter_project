@@ -55,16 +55,6 @@ class Controller {
     static addPostHandler(event) {
         event.preventDefault();
 
-        // let addedPost = document.forms.postForm.elements;
-        // let post = {};
-        //
-        // post.id = (parseInt(testPosts.findMaxId()) + 1).toString();
-        // post.author = view._currentUser;
-        // post.createdAt = new Date();
-        // post.likes = [];
-        // post.hashTags = addedPost.postHashtagsInput.value.split(',');
-        // post.description = addedPost.postDescriptionInput.value;
-
         let formData = new FormData(document.forms.postForm);
         formData.append('id', (parseInt(testPosts.findMaxId()) + 1).toString());
         formData.append('author', view._currentUser);
@@ -154,25 +144,26 @@ class Controller {
         let postId = getPostId(post);
         let postInstance = testPosts.get(postId);
 
-        postFormElements.postHashtagsInput.value = postInstance.hashTags.join(',');
-        postFormElements.postDescriptionInput.value = postInstance.description;
-        postFormElements.postHashtagsInput.value = postInstance.hashTags.join(',');
+        postFormElements.hashTags.value = postInstance.hashTags.join(',');
+        postFormElements.description.value = postInstance.description;
 
         function editPostHandler(event) {
             event.preventDefault();
 
             let editedPost = {};
 
-            editedPost.hashTags = postFormElements.postHashtagsInput.value.split(',');
-            editedPost.description = postFormElements.postDescriptionInput.value;
+            editedPost.hashTags = postFormElements.hashTags.value.split(',');
+            editedPost.description = postFormElements.description.value;
 
-            if (postFormElements.postImageInput.value !== '') {
-                editedPost.photoLink = post.postImageInput.value;
+            if (postFormElements.photoLink.value !== '') {
+                editedPost.photoLink = post.photoLink.value;
             }
 
-            testPosts.edit(postId, editedPost);
+            testPosts.edit(postId, editedPost).then(function () {
+                fetchPosts();
 
-            view.displayPage('mainPage');
+                view.displayPage('mainPage');
+            });
         }
 
         document.querySelector('button.back-button').addEventListener('click', Controller.backHandler);
