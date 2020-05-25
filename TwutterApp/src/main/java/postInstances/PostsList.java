@@ -1,5 +1,7 @@
 package postInstances;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -30,17 +32,11 @@ public class PostsList {
     }
 
     public Post getPost(String id) {
-        for (Post post: posts) {
-            if (post.getId().equals(id)) {
-                return post;
-            }
-        }
-
-        return null;
+        return posts.stream().filter(post -> post.getId().equals(id)).findFirst().orElse(null);
     }
 
     public static boolean validate(Post post) {
-        return  post.getId() != null && post.getId().length() > 0 &&
+        return  post.getId() != null && !post.getId().isEmpty() &&
                 post.getDescription() != null && post.getDescription().length() < 200 &&
                 post.getCreatedAt() != null &&
                 post.getAuthor() != null && post.getAuthor().length() > 0;
@@ -91,7 +87,7 @@ public class PostsList {
         List<Post> filteredPosts = posts.subList(skip, skip + top);
 
         if (filter != null) {
-            if (!filter.getAuthor().equals("")) {
+            if (StringUtils.isNotEmpty(filter.getAuthor())) {
                 filteredPosts = filteredPosts.stream().filter(post -> post.getAuthor().
                         equals(filter.getAuthor())).collect(Collectors.toList());
             }

@@ -20,13 +20,12 @@ import java.util.stream.Collectors;
 
 @MultipartConfig
 public class PostActionServlet extends HttpServlet {
+    private static final String PARAMETER_ID = "id";
     private static PostsList posts = new PostsList(15);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String parameterName = "id";
-
-        String postId = req.getParameter(parameterName);
+        String postId = req.getParameter(PARAMETER_ID);
         Post postToReturn = posts.getPost(postId);
 
         resp.getWriter().print((new Gson()).toJson(postToReturn));
@@ -34,8 +33,7 @@ public class PostActionServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String parameterName = "id";
-        String postId = req.getParameter(parameterName);
+        String postId = req.getParameter(PARAMETER_ID);
 
         resp.getWriter().print(posts.remove(postId));
     }
@@ -55,7 +53,7 @@ public class PostActionServlet extends HttpServlet {
 
             Filter.Builder filterBuilder = new Filter.Builder();
 
-            if (map.containsKey("author") && !map.get("author")[0].equals("")) {
+            if (map.containsKey("author") && !map.get("author")[0].isEmpty()) {
                 filterBuilder.setAuthor(map.get("author")[0]);
             }
 
@@ -100,8 +98,7 @@ public class PostActionServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String parameterName = "id";
-        String postId = req.getParameter(parameterName);
+        String postId = req.getParameter(PARAMETER_ID);
 
         Post editedPost = (new Gson()).fromJson(req.getReader().readLine(), Post.class);
 
