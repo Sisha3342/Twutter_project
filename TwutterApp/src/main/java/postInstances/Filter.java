@@ -28,22 +28,22 @@ public class Filter {
             author = "";
         }
 
-        public Builder setStartDate(Date date) {
+        public Builder StartDate(Date date) {
             this.startDate = date;
             return this;
         }
 
-        public Builder setEndDate(Date date) {
+        public Builder EndDate(Date date) {
             this.endDate = date;
             return this;
         }
 
-        public Builder setAuthor(String author) {
+        public Builder Author(String author) {
             this.author = author;
             return this;
         }
 
-        public Builder setHashTags(List<String> tags) {
+        public Builder HashTags(List<String> tags) {
             this.hashTags = tags;
             return this;
         }

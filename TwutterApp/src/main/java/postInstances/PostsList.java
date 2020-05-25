@@ -14,8 +14,8 @@ public class PostsList {
         for (int i = 0; i < postsCount; i++) {
             if (i % 2 == 0) {
                 this.add(new Post.Builder(String.valueOf(i), "post number" + i, new Date(), "Sasha")
-                        .setHashTags(List.of("js" + i, "task12"))
-                        .setLikes(List.of("Alex", "Misha", "Mike"))
+                        .HashTags(List.of("js" + i, "task12"))
+                        .Likes(List.of("Alex", "Misha", "Mike"))
                         .build());
             }
             else {
@@ -23,9 +23,9 @@ public class PostsList {
                         "post number" + i,
                         new Date(i * 100000000),
                         "Alex")
-                        .setPhotoLink("images/forest_image.png")
-                        .setHashTags(List.of("js", "task12"))
-                        .setLikes(List.of("Sasha"))
+                        .PhotoLink("images/forest_image.png")
+                        .HashTags(List.of("js", "task12"))
+                        .Likes(List.of("Sasha"))
                         .build());
             }
         }

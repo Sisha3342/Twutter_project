@@ -54,23 +54,23 @@ public class PostActionServlet extends HttpServlet {
             Filter.Builder filterBuilder = new Filter.Builder();
 
             if (map.containsKey("author") && !map.get("author")[0].isEmpty()) {
-                filterBuilder.setAuthor(map.get("author")[0]);
+                filterBuilder.Author(map.get("author")[0]);
             }
 
             try {
                 if (map.containsKey("startDate") && !map.get("startDate")[0].equals("")) {
-                    filterBuilder.setStartDate(new SimpleDateFormat("yy-MM-dd HH:mm:ss").parse(map.get("startDate")[0]));
+                    filterBuilder.StartDate(new SimpleDateFormat("yy-MM-dd HH:mm:ss").parse(map.get("startDate")[0]));
                 }
 
                 if (map.containsKey("endDate") && !map.get("endDate")[0].equals("")) {
-                    filterBuilder.setEndDate(new SimpleDateFormat("yy-MM-dd HH:mm:ss").parse(map.get("endDate")[0]));
+                    filterBuilder.EndDate(new SimpleDateFormat("yy-MM-dd HH:mm:ss").parse(map.get("endDate")[0]));
                 }
             } catch (ParseException ex) {
                 return ;
             }
 
             if (map.containsKey("hashTags") && !map.get("hashTags")[0].equals("")) {
-                filterBuilder.setHashTags(List.of(map.get("hashTags")[0].split(",")));
+                filterBuilder.HashTags(List.of(map.get("hashTags")[0].split(",")));
             }
 
             resp.getWriter().print(posts.getPosts(Integer.parseInt(map.get("skip")[0]),
@@ -82,8 +82,8 @@ public class PostActionServlet extends HttpServlet {
             try {
                 postToAdd = new Post.Builder(map.get("id")[0], map.get("description")[0],
                         new SimpleDateFormat("yy-MM-dd HH:mm:ss").parse(map.get("createdAt")[0]), map.get("author")[0]).
-                        setLikes(new ArrayList<>()).
-                        setHashTags(List.of(map.get("hashTags")[0].split(","))).build();
+                        Likes(new ArrayList<>()).
+                        HashTags(List.of(map.get("hashTags")[0].split(","))).build();
             } catch (ParseException e) {
                 return ;
             }
