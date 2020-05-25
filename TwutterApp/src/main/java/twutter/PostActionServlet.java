@@ -50,8 +50,7 @@ public class PostActionServlet extends HttpServlet {
 
             resp.getWriter().print(posts.getPosts(0, posts.getLength(), null).stream().map(gson::toJson).
                     collect(Collectors.joining("\n")));
-        }
-        else if (map.containsKey("skip")) {
+        } else if (map.containsKey("skip")) {
             Gson gson = new Gson();
 
             Filter.Builder filterBuilder = new Filter.Builder();
@@ -79,8 +78,7 @@ public class PostActionServlet extends HttpServlet {
             resp.getWriter().print(posts.getPosts(Integer.parseInt(map.get("skip")[0]),
                     Integer.parseInt(map.get("top")[0]), filterBuilder.build()).stream().map(gson::toJson).
                     collect(Collectors.joining("\n")));
-        }
-        else {
+        } else {
             Post postToAdd;
 
             try {

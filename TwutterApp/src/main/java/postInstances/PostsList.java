@@ -63,7 +63,7 @@ public class PostsList {
     public boolean edit(String id, Post post) {
         Post foundPost = this.getPost(id);
 
-        if (post == null || post.getId() != null ||post.getAuthor() != null ||
+        if (post == null || post.getId() != null || post.getAuthor() != null ||
                 post.getCreatedAt() != null) {
             return false;
         }
