@@ -7,7 +7,6 @@ class Controller {
         testPosts.getPage(0, testPosts.getLength(), filtersForm).then(function (response) {
             let filtered;
 
-
             if (response === "") {
                 filtered = new PostsList([]);
             }
