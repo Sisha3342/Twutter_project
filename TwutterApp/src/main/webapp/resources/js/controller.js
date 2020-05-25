@@ -14,7 +14,7 @@ class Controller {
             else {
                 filtered = new PostsList(response.split('\n').map(JSON.parse));
             }
-            
+
             view.setPostsList(filtered);
         })
     }
