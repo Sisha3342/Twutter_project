@@ -39,19 +39,13 @@ class View {
     }
 
     refreshPage() {
-        testPosts.saveToLocalStorage();
-
-        for (let post of testPosts._posts) {
-            testPostsDiv[post.id] = (new PostDiv(post)).getPostDiv();
-        }
-
         this._authorizedUserDisplay();
         this._authorizedAddDisplay();
         this._posts.innerHTML = '';
 
-        this._postsList.getPage(undefined, this._postsToShowCount)._posts.forEach(post => {
-            this._posts.append((new PostDiv(post)).getPostDiv());
-        });
+        for (let i = 0; i < this._postsList.getLength() && i < this._postsToShowCount; i++) {
+            this._posts.append((new PostDiv(this._postsList._posts[i])).getPostDiv());
+        }
 
         this._authorizedPostDisplay();
     }
@@ -126,20 +120,20 @@ class View {
 
             <div class="filter">
                 <p>Name</p>
-                <input name="nameInput" type="text" placeholder="Name">
+                <input name="author" type="text" placeholder="Name">
             </div>
 
             <div class="filter">
                 <p>Date</p>
                 
-                <input name="startDateInput" type="date">
-                <input name="endDateInput" type="date">
+                <input name="startDate" type="date">
+                <input name="endDate" type="date">
 
             </div>
 
             <div class="filter">
                 <p>Hashtags</p>
-                <input name="hashTagsInput" type="text" placeholder="Tags">
+                <input name="hashTags" type="text" placeholder="Tags">
             </div>
 
             <input type="submit" class="apply-filters" value="apply">
@@ -181,13 +175,13 @@ class View {
         addForm.innerHTML = `
             <form name="postForm">
                 <h2>HashTags (separated by ',')</h2>
-                <input name="postHashtagsInput" type="text" placeholder="tags">
+                <input name="hashTags" type="text" placeholder="tags">
                 
                 <h2>Description</h2>
-                <textarea name="postDescriptionInput" rows="10"></textarea>
+                <textarea name="description" rows="10"></textarea>
                 
                 <h2>Image</h2>
-                <input name="postImageInput" type="file" accept=".jpg, .jpeg, .png">
+                <input name="photoLink" type="file" accept=".jpg, .jpeg, .png">
             </form>
             
             <button class="add-post-button">Add post</button>
@@ -216,13 +210,13 @@ class View {
         editForm.innerHTML = `
         <form name="postForm">
             <h2>HashTags (separated by ',')</h2>
-            <input name="postHashtagsInput" type="text" placeholder="tags">
+            <input name="hashTags" type="text" placeholder="tags">
             
             <h2>Description</h2>
-            <textarea name="postDescriptionInput" rows="10"></textarea>
+            <textarea name="description" rows="10"></textarea>
             
             <h2>Image</h2>
-            <input name="postImageInput" type="file" accept=".jpg, .jpeg, .png">
+            <input name="photoLink" type="file" accept=".jpg, .jpeg, .png">
         </form>
 
         <button class="edit-post-button">Save</button>

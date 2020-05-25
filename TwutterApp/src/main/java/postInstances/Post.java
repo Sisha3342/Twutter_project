@@ -1,4 +1,4 @@
-package twutter;
+package postInstances;
 
 import java.util.Date;
 import java.util.List;
@@ -29,17 +29,17 @@ public class Post {
             this.author = author;
         }
 
-        public Builder setPhotoLink(String photoLink) {
+        public Builder PhotoLink(String photoLink) {
             this.photoLink = photoLink;
             return this;
         }
 
-        public Builder setHashTags(List<String> hashTags) {
+        public Builder HashTags(List<String> hashTags) {
             this.hashTags = List.copyOf(hashTags);
             return this;
         }
 
-        public Builder setLikes(List<String> likes) {
+        public Builder Likes(List<String> likes) {
             this.likes = List.copyOf(likes);
             return this;
         }

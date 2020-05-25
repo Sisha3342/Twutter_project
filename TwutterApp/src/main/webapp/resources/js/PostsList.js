@@ -1,147 +1,49 @@
 class PostsList {
     constructor(posts) {
         this._posts = posts.concat();
-
-        this.saveToLocalStorage();
     }
 
-    getPage(skip=0, top=10, filterConfig=undefined) {
-        let postsToReturn = this._posts.concat();
-
-        if (filterConfig) {
-            for (let property in filterConfig) {
-                switch (property) {
-                    case "hashTags":
-                        for(let i = 0; i < filterConfig.hashTags.length; i++) {
-                            postsToReturn = postsToReturn.filter(post => post.hashTags.includes(filterConfig.hashTags[i]));
-                        }
-                        break;
-                    case "startDate":
-                        postsToReturn = postsToReturn.filter(post => post.createdAt >= filterConfig.startDate);
-                        break;
-                    case "endDate":
-                        postsToReturn = postsToReturn.filter(post => post.createdAt <= filterConfig.endDate);
-                        break;
-                    case "author":
-                        postsToReturn = postsToReturn.filter(post => post["author"].includes(filterConfig["author"]));
-                        break;
-                    default:
-                        postsToReturn = postsToReturn.filter(post => post[property] === filterConfig[property]);
-                        break;
-                }
-            }
-        }
-
-        postsToReturn.sort(function (post1, post2) {
-            if (post1.createdAt < post2.createdAt) {
-                return 1;
-            }
-            
-            if (post2.createdAt < post1.createdAt) {
-                return -1;
-            }
-            
-            return 0;   
+    async getPage(skip=0, top=10, filterConfig=undefined) {
+        let filterPosts = await fetch('http://localhost:8080/tweets?skip=' + skip + '&top=' + top, {
+            method: 'POST',
+            body: filterConfig
         });
 
-        return new PostsList(postsToReturn.slice(skip, skip + top));
+        return (await filterPosts).text();
     }
 
     get(id) {
         return this._posts.find(post => post.id === id);
     }
 
-    static _validate_property(post, property) {
-        switch (property) {
-            case 'id':
-                return typeof post.id === 'string';
-            case 'description':
-                return typeof post.description === 'string' && post.description.length < 200;
-            case 'createdAt':
-                return Object.prototype.toString.call(post.createdAt) === '[object Date]';
-            case 'author':
-                return typeof post.author === 'string' && post.author.length !== 0;
-            case 'hashTags':
-                return post.hashTags && post.hashTags.every(tag => typeof tag === 'string');
-            case 'likes':
-                return post.likes && post.likes.every(tag => typeof tag === 'string');
-            case 'photoLink':
-                return typeof post.photoLink === 'string';
-            default:
-                return false;
-        }
+    async add(post) {
+        let addPost = await fetch('http://localhost:8080/tweets', {
+            method: 'POST',
+            body: post
+        });
+
+        return (await addPost).text();
     }
 
-    static validate(post) {
-        let validProperty = PostsList._validate_property;
+    async remove(id) {
+        let removePost = await fetch('http://localhost:8080/tweets?id=' + id, {
+            method: 'DELETE'
+        });
 
-        return validProperty(post, 'id') &&
-               validProperty(post, 'description') &&
-               validProperty(post, 'createdAt') &&
-               validProperty(post, 'author') &&
-               validProperty(post, 'hashTags') &&
-               validProperty(post, 'likes');
+        return (await removePost).text();
     }
 
-    add(post) {
-        if (PostsList.validate(post)) {
-            this._posts.push(post);
+    async edit(id, post) {
+        let editPost = await fetch('http://localhost:8080/tweets?id=' + id, {
+            method: 'PUT',
+            body: JSON.stringify(post)
+        });
 
-            return true;
-        }
-
-        return false;
-    }
-
-    remove(id) {
-        let postIndex = this._posts.findIndex(post => post.id === id)
-
-        if (postIndex !== -1) {
-            this._posts.splice(postIndex, 1);
-
-            return true;
-        }
-
-        return false;
-    }
-
-    static _validateEditPost(post) {
-        for (let property in post) {
-            if (property === 'id' || property === 'createdAt' || property === 'author' || property === 'likes') {
-                return false;
-            }
-            else if (!PostsList._validate_property(post, property)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    edit(id, post) {
-        if (!PostsList._validateEditPost(post)) {
-            return false;
-        }
-
-        let postToEdit = this.get(id);
-
-        for (let property in post) {
-            postToEdit[property] = post[property];
-        }
-
-        return true;
+        return (await editPost).text();
     }
 
     getLength() {
         return this._posts.length;
-    }
-
-    saveToLocalStorage() {
-        localStorage.setItem('posts', JSON.stringify(this));
-    }
-
-    static restoreFromLocalStorage() {
-        return new PostsList(JSON.parse(localStorage.getItem('posts'))._posts);
     }
 
     findMaxId() {

@@ -2,37 +2,20 @@ class Controller {
     static submitFiltersHandler(event) {
         event.preventDefault();
 
-        let filtersInputs = document.forms.filtersForm.elements;
-        let filterObject = {};
+        let filtersForm = new FormData(document.forms.filtersForm);
 
-        for (let input of filtersInputs) {
-           switch (input.name) {
-               case 'nameInput':
-                   if (input.value !== '') {
-                       filterObject['author'] = input.value;
-                   }
-                   break;
-                case 'startDateInput':
-                    if (input.value !== '') {
-                        filterObject["startDate"] = Date.parse(input.value);
-                    }
-                    break;
-                case 'endDateInput':
-                    if (input.value !== '') {
-                        filterObject['endDate'] = Date.parse(input.value);
-                    }
-                    break;
-                case 'hashTagsInput':
-                    if (input.value !== '') {
-                        filterObject['hashTags'] = input.value.split(' ');
-                    }
-                    break;
-                default:
-                    break;
+        testPosts.getPage(0, testPosts.getLength(), filtersForm).then(function (response) {
+            let filtered;
+
+            if (response === "") {
+                filtered = new PostsList([]);
             }
-        }
-        
-        view.setPostsList(testPosts.getPage(undefined, testPosts.getLength(), filterObject));
+            else {
+                filtered = new PostsList(response.split('\n').map(JSON.parse));
+            }
+
+            view.setPostsList(filtered);
+        })
     }
 
     static loadMoreTweetsHandler() {
@@ -55,23 +38,18 @@ class Controller {
     static addPostHandler(event) {
         event.preventDefault();
 
-        let addedPost = document.forms.postForm.elements; 
-        let post = {};
+        let formData = new FormData(document.forms.postForm);
+        formData.append('id', (parseInt(testPosts.findMaxId()) + 1).toString());
+        formData.append('author', view._currentUser);
+        formData.append('createdAt', (new Date()).toISOString().
+        replace(/T/, ' ').replace(/\..+/, ''));
+        formData.append('likes', [].toString());
 
-        post.id = (parseInt(testPosts.findMaxId()) + 1).toString();
-        post.author = view._currentUser;
-        post.createdAt = new Date();
-        post.likes = [];
-        post.hashTags = addedPost.postHashtagsInput.value.split(',');
-        post.description = addedPost.postDescriptionInput.value;
+        testPosts.add(formData).then(function () {
+            fetchPosts();
 
-        if (addedPost.postImageInput.value !== '') {
-            post.photoLink = addedPost.postImageInput.value;
-        }
-
-        testPosts.add(post);
-
-        view.displayPage('mainPage');
+            view.displayPage('mainPage');
+        });
     }
 
     static postActionHandler(event) {
@@ -103,21 +81,19 @@ class Controller {
         if (confirm('Delete this post?')) {
             let postId = getPostId(post);
 
-            testPosts.remove(postId);
-            delete testPostsDiv.postId;
-            
-            View.setPostsDisplay(view);
-            view.refreshPage();
-            document.forms.filtersForm.reset();
+            testPosts.remove(postId).then(function () {
 
-            console.log(testPosts);
+                fetchPosts();
+
+                View.setPostsDisplay(view);
+                view.refreshPage();
+                document.forms.filtersForm.reset();
+            });
         }
     }
 
     static likePostHandler(post) {
         let postId = getPostId(post);
-
-        console.log(postId);
 
         let postInstance = testPosts.get(postId);
         let userIndex = postInstance.likes.indexOf(view._currentUser);
@@ -125,21 +101,23 @@ class Controller {
         if (userIndex !== -1) {
             postInstance.likes.splice(userIndex, 1);
 
-            let likesCount = post.querySelector('.likes-count');
-            likesCount.textContent = +likesCount.textContent - 1 + '';
+            testPosts.edit(postId, {likes: postInstance.likes}).then(function () {
+                let likesCount = post.querySelector('.likes-count');
+                likesCount.textContent = +likesCount.textContent - 1 + '';
+
+                fetchPosts();
+            });
         }
         else {
             postInstance.likes.push(view._currentUser);
 
-            let likesCount = post.querySelector('.likes-count');
-            likesCount.textContent = +likesCount.textContent + 1 + '';
-        }
+            testPosts.edit(postId, {likes: postInstance.likes}).then(function () {
+                let likesCount = post.querySelector('.likes-count');
+                likesCount.textContent = +likesCount.textContent + 1 + '';
 
-        for (let post of testPosts._posts) {
-            testPostsDiv[post.id] = (new PostDiv(post)).getPostDiv();
+                fetchPosts();
+            });
         }
-
-        console.log(testPosts);
     }
 
     static processEditPostPage(post) {
@@ -149,25 +127,26 @@ class Controller {
         let postId = getPostId(post);
         let postInstance = testPosts.get(postId);
 
-        postFormElements.postHashtagsInput.value = postInstance.hashTags.join(',');
-        postFormElements.postDescriptionInput.value = postInstance.description;
-        postFormElements.postHashtagsInput.value = postInstance.hashTags.join(',');
+        postFormElements.hashTags.value = postInstance.hashTags.join(',');
+        postFormElements.description.value = postInstance.description;
 
         function editPostHandler(event) {
             event.preventDefault();
 
             let editedPost = {};
 
-            editedPost.hashTags = postFormElements.postHashtagsInput.value.split(',');
-            editedPost.description = postFormElements.postDescriptionInput.value;
+            editedPost.hashTags = postFormElements.hashTags.value.split(',');
+            editedPost.description = postFormElements.description.value;
 
-            if (postFormElements.postImageInput.value !== '') {
-                editedPost.photoLink = post.postImageInput.value;
+            if (postFormElements.photoLink.value !== '') {
+                editedPost.photoLink = post.photoLink.value;
             }
 
-            testPosts.edit(postId, editedPost);
+            testPosts.edit(postId, editedPost).then(function () {
+                fetchPosts();
 
-            view.displayPage('mainPage');
+                view.displayPage('mainPage');
+            });
         }
 
         document.querySelector('button.back-button').addEventListener('click', Controller.backHandler);
@@ -216,7 +195,3 @@ class Controller {
         document.querySelector('button.log-in-button').addEventListener('click', Controller.logInHandler);
     }
 }
-
-window.onunload = function() {
-    testPosts.saveToLocalStorage();
-};
